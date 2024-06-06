@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleeppal/pages/home_page.dart';
 
 import '../pages/login_page.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
