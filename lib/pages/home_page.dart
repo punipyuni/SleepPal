@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:sleeppal/pages/signup_page.dart';
+
 import '../widgets/my_button.dart';
-import '../widgets/my_textfield.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,25 +20,31 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: Center( 
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo
-                Icon(
+                const Icon(
                   Icons.account_circle,
                   size: 175,
                   color: Colors.white,
                 ),
-                SizedBox(height: 50),
-                //Sign in Button
-                MyButton(text: 'Sign in'),
-                SizedBox(height: 25),
+                const SizedBox(height: 50),
+                //Log In Button
+                MyButton(
+                  onPressed: () => Navigator.pushNamed(context, '/login'),
+                  text: 'Log in',
+                ),
+                const SizedBox(height: 25),
                 //Sign Up Button
-                MyButton(text: 'Sign up'),
+                MyButton(
+                  onPressed: () => Navigator.pushNamed(context, '/signup'),
+                  text: 'Sign up',
+                ),
               ],
             ),
           ),

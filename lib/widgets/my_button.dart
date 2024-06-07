@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
   final String text;
-  //final Function() onPressed;
+  final VoidCallback onPressed;
 
   const MyButton({
     Key? key,
-    //required this.onPressed,
+    required this.onPressed,
     required this.text,
   }) : super(key: key);
 
@@ -15,16 +15,23 @@ class MyButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ElevatedButton(
-        onPressed: () {},
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(const Color.fromRGBO(106, 123, 255, 1)),
-          fixedSize: MaterialStateProperty.all(const Size(300, 50)),
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(300, 50),
+          backgroundColor: const Color.fromRGBO(106, 123, 255, 1),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 20, fontFamily: 'Unifont Smooth'),
-        ),
+        child: Text(text,
+          style: const TextStyle(
+            fontSize: 20,
+            fontFamily: 'Unifont Smooth',
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        )
       ),
     );
   }

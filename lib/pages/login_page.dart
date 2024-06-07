@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/my_button.dart';
 import '../widgets/my_textfield.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,35 +22,36 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       ),
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo
-                Icon(
+                const Icon(
                   Icons.account_circle,
-                  size: 100,
+                  size: 175,
                   color: Colors.white,
                 ),
-
-                SizedBox(height: 50),
-
+                const SizedBox(height: 50),
                 // Username Textfield
-                //MyTextField(),
-
-                SizedBox(height: 20),
-
+                MyTextField(
+                  controller: usernameController,
+                  hintText: 'Username or Email',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 20),
                 // Password Textfield
                 //MyTextField(),
-
-                SizedBox(height: 20),
-
+                const SizedBox(height: 20),
                 // Login Button
-
-                SizedBox(height: 10),
-
+                MyButton(
+                  onPressed: () {},
+                  text: 'Sign up',
+                ),
+                const SizedBox(height: 10),
                 // Forgot Password Button
               ],
             ),
