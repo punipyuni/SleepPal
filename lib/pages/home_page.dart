@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:sleeppal/pages/signup_page.dart';
-
 import '../widgets/my_button.dart';
 
 class HomePage extends StatelessWidget {
