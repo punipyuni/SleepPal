@@ -3,7 +3,11 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+<<<<<<< Updated upstream
   permission_handler_windows
+=======
+  url_launcher_windows
+>>>>>>> Stashed changes
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
