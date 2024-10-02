@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sleeppal/pages/chatGPT.dart';
-import 'package:sleeppal/widgets/forum_header.dart';
+import '../pages/chatGPT.dart';
+import 'package:sleeppal_update/pages/chatGPT.dart';
 import '../widgets/forum_post.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../pages/sleep.dart';

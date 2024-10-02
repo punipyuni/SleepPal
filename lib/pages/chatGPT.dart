@@ -1,8 +1,8 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert'; // For encoding/decoding JSON
-import 'package:http/http.dart' as http; // For making HTTP requests
-import 'package:sleeppal/const.dart'; // Ensure you add your API key in this file
+import 'package:http/http.dart' as http;
+import 'package:sleeppal_update/const.dart'; // For making HTTP requests
 
 class Chatgpt extends StatefulWidget {
   const Chatgpt({super.key});
@@ -15,7 +15,7 @@ class Chatgpt extends StatefulWidget {
 final ChatUser currentUser =
     ChatUser(id: '1', firstName: 'Nigga', lastName: '56');
 final ChatUser gptChatUser =
-    ChatUser(id: '2', firstName: 'Chat', lastName: 'GPT');
+    ChatUser(id: '2', firstName: 'Sleep', lastName: 'GPT');
 List<ChatMessage> messages = <ChatMessage>[];
 
 class _ChatgptState extends State<Chatgpt> {
