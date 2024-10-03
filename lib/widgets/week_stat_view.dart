@@ -15,17 +15,17 @@ class WeekStatisticsView extends StatelessWidget {
           children: [
             SizedBox(height: 16),
             Text(
-              provider.selectedWeekDayDuration ?? '--:--',
+              provider.selectedDayDuration ?? '--:--',
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
             SizedBox(height: 16),
-            WeeklyBarChart(
-  data: provider.weeklyData,
-  onBarSelected: provider.selectDayInWeekView,
-),
+           WeeklyBarChart(
+              data: provider.weeklyChartData,
+              onBarSelected: provider.selectDayInWeekView,
+            ),
             SizedBox(height: 24),
             StatisticItem(title: 'Sleep Duration (AVG)', value: '6 hr 30 min'),
             SizedBox(height: 16),
@@ -57,7 +57,7 @@ class WeekStatisticsView extends StatelessWidget {
 }
 
 class WeeklyBarChart extends StatelessWidget {
-  final List<Map<String, dynamic>> data; // Adjusted to specify the type
+  final List<Map<String, dynamic>> data;
   final Function(int) onBarSelected;
 
   WeeklyBarChart({required this.data, required this.onBarSelected});
@@ -74,7 +74,9 @@ class WeeklyBarChart extends StatelessWidget {
           final double remFactor = item['remFactor'] ?? 0.0;
           final double lightFactor = item['lightFactor'] ?? 0.0;
           final double deepFactor = item['deepFactor'] ?? 0.0;
+          final double heightFactor = item['heightFactor'] ?? 0.0;
           final String day = item['day'] ?? 'N/A';
+          final Duration totalDuration = item['totalDuration'] ?? Duration.zero;
 
           return GestureDetector(
             onTap: () => onBarSelected(index),
@@ -84,12 +86,12 @@ class WeeklyBarChart extends StatelessWidget {
                 Flexible(
                   child: Container(
                     width: 20,
+                    height: 150 * heightFactor,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        _buildSegment(remFactor, Color(0xFFFF9AA2), isTopSegment: true), // Rounded top for REM
-                        _buildSegment(lightFactor, Color(0xFFFFB7B2)), // Square corners for Light
-                        _buildSegment(deepFactor, Color(0xFF800080)), // Square corners for Deep
+                        _buildSegment(remFactor, Color(0xFFFF9AA2), isTopSegment: true),
+                        _buildSegment(lightFactor, Color(0xFFFFB7B2)),
+                        _buildSegment(deepFactor, Color(0xFF800080), isBottomSegment: true),
                       ],
                     ),
                   ),
@@ -107,20 +109,21 @@ class WeeklyBarChart extends StatelessWidget {
     );
   }
 
-  Widget _buildSegment(double factor, Color color, {bool isTopSegment = false}) {
-    return Container(
-      height: factor * 150,
-      width: 30,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: isTopSegment 
-            ? BorderRadius.vertical(top: Radius.circular(8)) // Rounded top for REM
-            : BorderRadius.zero, // Square corners for Light and Deep
+  Widget _buildSegment(double factor, Color color, {bool isTopSegment = false, bool isBottomSegment = false}) {
+    return Expanded(
+      flex: (factor * 100).round(),
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.vertical(
+            top: isTopSegment ? Radius.circular(8) : Radius.zero,
+            bottom: isBottomSegment ? Radius.circular(8) : Radius.zero,
+          ),
+        ),
       ),
     );
   }
 }
-
 class SleepScoreWidget extends StatelessWidget {
   final int score;
 
