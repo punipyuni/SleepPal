@@ -23,9 +23,18 @@ an innovative mobile application designed to enhance sleep quality by providing 
 * Express
 ### Database
 * MongoDB
+
+### Tools
+* MongoDBCompass
+* Postman
+
 ### 3rd-Party APIs
-* ChatGPT3.5 Turbo (or ChatGPT4-o)
+* ChatGPT3.5 Turbo (Maybe not)
+* OpenRouter
 * Health Connect
+
+### AI Model
+* Nous: Hermes 3 405B Instruct
 
 ## Documents
 **Important:** _Note to change every docs access to view only_
