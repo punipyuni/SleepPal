@@ -6,6 +6,6 @@ class SleepTimeToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ToggleOption(title: 'Sleep time');
+    return const ToggleOption(title: 'Sleep time', isSleepTime: true);
   }
 }
