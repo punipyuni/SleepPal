@@ -52,7 +52,7 @@ class _SleepScreenState extends State<SleepScreen> {
                 SleepTimeToggle(),
                 SizedBox(height: 40),
                 TimerDisplay(),
-                SizedBox(height: 200),
+                const Spacer(),
                 RelaxingSoundOption(),
               ],
             ),
