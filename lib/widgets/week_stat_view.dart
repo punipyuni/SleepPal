@@ -15,7 +15,7 @@ class WeekStatisticsView extends StatelessWidget {
           children: [
             SizedBox(height: 16),
             Text(
-              provider.selectedDayDuration ?? '--:--',
+              provider.selectedWeekDayDuration ?? '--:--',
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -27,6 +27,7 @@ class WeekStatisticsView extends StatelessWidget {
               onBarSelected: provider.selectDayInWeekView,
             ),
             SizedBox(height: 24),
+            
             StatisticItem(title: 'Sleep Duration (AVG)', value: '6 hr 30 min'),
             SizedBox(height: 16),
             StatisticItem(
@@ -58,12 +59,14 @@ class WeekStatisticsView extends StatelessWidget {
 
 class WeeklyBarChart extends StatelessWidget {
   final List<Map<String, dynamic>> data;
-  final Function(int) onBarSelected;
+  final Function(int?) onBarSelected;
 
   WeeklyBarChart({required this.data, required this.onBarSelected});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SleepStatisticsProvider>(context);
+    
     return Container(
       height: 200,
       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -78,8 +81,10 @@ class WeeklyBarChart extends StatelessWidget {
           final String day = item['day'] ?? 'N/A';
           final Duration totalDuration = item['totalDuration'] ?? Duration.zero;
 
+          final bool isSelected = provider.selectedWeekDayIndex == index;
+
           return GestureDetector(
-            onTap: () => onBarSelected(index),
+            onTap: () => onBarSelected(isSelected ? null : index),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -87,6 +92,12 @@ class WeeklyBarChart extends StatelessWidget {
                   child: Container(
                     width: 20,
                     height: 150 * heightFactor,
+                    decoration: BoxDecoration(
+                      border: isSelected
+                          ? Border.all(color: Colors.white, width: 2)
+                          : null,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Column(
                       children: [
                         _buildSegment(remFactor, Color(0xFFFF9AA2), isTopSegment: true),
@@ -99,7 +110,11 @@ class WeeklyBarChart extends StatelessWidget {
                 SizedBox(height: 8),
                 Text(
                   day,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : Colors.white70,
+                    fontSize: 12,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  ),
                 ),
               ],
             ),

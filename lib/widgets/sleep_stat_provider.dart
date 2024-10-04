@@ -1,51 +1,4 @@
-// import 'package:flutter/foundation.dart';
 
-// class SleepStatisticsProvider with ChangeNotifier {
-//   bool _isDayView = true;
-//   int _selectedDayIndex = 0; // For day view
-//   int? _selectedWeekDayIndex; // For week view
-//   List<Map<String, dynamic>> _weeklyData = [
-//     {'day': 'Mon', 'duration': Duration(hours: 7, minutes: 30)},
-//     {'day': 'Tue', 'duration': Duration(hours: 6, minutes: 45)},
-//     {'day': 'Wed', 'duration': Duration(hours: 8, minutes: 0)},
-//     {'day': 'Thu', 'duration': Duration(hours: 7, minutes: 15)},
-//     {'day': 'Fri', 'duration': Duration(hours: 9, minutes: 30)},
-//     {'day': 'Sat', 'duration': Duration(hours: 8, minutes: 45)},
-//     {'day': 'Sun', 'duration': Duration(hours: 7, minutes: 0)},
-//   ];
-
-  
-
-//   bool get isDayView => _isDayView;
-//   int get selectedDayIndex => _selectedDayIndex;
-//   int? get selectedWeekDayIndex => _selectedWeekDayIndex;
-//   List<Map<String, dynamic>> get weeklyData => _weeklyData;
-
-//   String? get selectedWeekDayDuration {
-//     if (_selectedWeekDayIndex != null && _selectedWeekDayIndex! >= 0 && _selectedWeekDayIndex! < _weeklyData.length) {
-//       final duration = _weeklyData[_selectedWeekDayIndex!]['duration'] as Duration;
-//       return '${duration.inHours} hr ${duration.inMinutes.remainder(60)} min';
-//     }
-//     return null;
-//   }
-
-//   void toggleView(bool isDay) {
-//     _isDayView = isDay;
-//     notifyListeners();
-//   }
-
-//   void selectDayInDayView(int index) {
-//     _selectedDayIndex = index;
-//     notifyListeners();
-//   }
-
-//   void selectDayInWeekView(int? index) {
-//     _selectedWeekDayIndex = index;
-//     notifyListeners();
-//   }
-
-//   // Add more methods as needed for fetching and updating sleep statistics data
-// }
 
 import 'package:flutter/foundation.dart';
 
@@ -134,22 +87,22 @@ class SleepStatisticsProvider with ChangeNotifier {
     }).toList();
   }
 
-  bool get isDayView => _isDayView;
+bool get isDayView => _isDayView;
   int get selectedDayIndex => _selectedDayIndex;
   int? get selectedWeekDayIndex => _selectedWeekDayIndex;
   DateTime get currentWeekStart => _currentWeekStart;
   
   List<Map<String, dynamic>> get weeklyData => _weeklyData;
 
-  Map<String, dynamic> get selectedDayData => 
-      _selectedWeekDayIndex != null ? _weeklyData[_selectedWeekDayIndex!] : _weeklyData[_selectedDayIndex];
+  Map<String, dynamic> get selectedDayData => _weeklyData[_selectedDayIndex];
 
-  String get selectedDayDuration {
+  Map<String, dynamic>? get selectedWeekDayData => 
+      _selectedWeekDayIndex != null ? _weeklyData[_selectedWeekDayIndex!] : null;
+
+  String get selectedDaySleepDuration {
     final duration = selectedDayData['duration'] as Duration;
     return '${duration.inHours} hr ${duration.inMinutes.remainder(60)} min';
   }
-
-  String get selectedDaySleepDuration => selectedDayDuration;
 
   String get selectedDayTimeAsleep {
     final rem = selectedDayData['rem'] as Duration;
@@ -159,11 +112,20 @@ class SleepStatisticsProvider with ChangeNotifier {
     return '${totalAsleep.inHours} hr ${totalAsleep.inMinutes.remainder(60)} min';
   }
 
+  String? get selectedWeekDayDuration {
+    if (_selectedWeekDayIndex != null) {
+      final duration = selectedWeekDayData!['duration'] as Duration;
+      return '${duration.inHours} hr ${duration.inMinutes.remainder(60)} min';
+    }
+    return null;
+  }
+
   String get selectedDaySleepingTime {
     // Assuming you store sleeping time in your data model
     // If not, you might want to calculate it based on your data
     return '23:00 p.m.';
   }
+  
 
   String get selectedDayWakeUpTime {
     // Assuming you store wake up time in your data model
@@ -175,6 +137,9 @@ class SleepStatisticsProvider with ChangeNotifier {
 
   void toggleView(bool isDay) {
     _isDayView = isDay;
+    if (!isDay) {
+      _selectedWeekDayIndex = null; // Reset week selection when switching to week view
+    }
     notifyListeners();
   }
 
@@ -184,10 +149,17 @@ class SleepStatisticsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void selectDayInWeekView(int index) {
-    _selectedWeekDayIndex = index;
+    void selectDayInWeekView(int? index) {
+    if (_selectedWeekDayIndex == index) {
+      // If the tapped day is already selected, deselect it
+      _selectedWeekDayIndex = null;
+    } else {
+      // Otherwise, select the tapped day
+      _selectedWeekDayIndex = index;
+    }
     notifyListeners();
   }
+
 
   DateTime getDateForIndex(int index) {
     return _currentWeekStart.add(Duration(days: index));
