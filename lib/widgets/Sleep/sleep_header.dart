@@ -16,11 +16,6 @@ class SleepHeader extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const CircleAvatar(
-          radius: 20,
-          backgroundColor: Colors.grey,
-          // Add user image here
-        ),
       ],
     );
   }
