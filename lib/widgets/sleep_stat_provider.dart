@@ -20,55 +20,68 @@ class SleepStatisticsProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> _weeklyData = [
      {
-      'day': 'Mon',
-      'duration': Duration(hours: 7, minutes: 30),
-      'rem': Duration(hours: 1, minutes: 30),
-      'light': Duration(hours: 4, minutes: 0),
-      'deep': Duration(hours: 2, minutes: 0),
-    },
-    {
-      'day': 'Tue',
-      'duration': Duration(hours: 6, minutes: 45),
-      'rem': Duration(hours: 1, minutes: 15),
-      'light': Duration(hours: 3, minutes: 30),
-      'deep': Duration(hours: 2, minutes: 0),
-    },
-    {
-      'day': 'Wed',
-      'duration': Duration(hours: 9, minutes: 30),
-      'rem': Duration(hours: 2, minutes: 0),
-      'light': Duration(hours: 5, minutes: 30),
-      'deep': Duration(hours: 1, minutes: 30),
-    },
-    {
-      'day': 'Thu',
-      'duration': Duration(hours: 5, minutes: 50),
-      'rem': Duration(hours: 1, minutes: 15),
-      'light': Duration(hours: 2, minutes: 45),
-      'deep': Duration(hours: 1, minutes: 0),
-    },
-    {
-      'day': 'Fri',
-      'duration': Duration(hours: 8, minutes: 34),
-      'rem': Duration(hours: 4, minutes: 4),
-      'light': Duration(hours: 2, minutes: 30),
-      'deep': Duration(hours: 2, minutes: 0),
-    },
-    {
-      'day': 'Sat',
-      'duration': Duration(hours: 10, minutes: 11),
-      'rem': Duration(hours: 3, minutes: 11),
-      'light': Duration(hours: 3, minutes: 0),
-      'deep': Duration(hours: 4, minutes: 0),
-    },
-    {
-      'day': 'Sun',
-      'duration': Duration(hours: 9, minutes: 0),
-      'rem': Duration(hours: 3, minutes: 30),
-      'light': Duration(hours: 2, minutes: 0),
-      'deep': Duration(hours: 3, minutes: 30),
-    },
-
+    'day': 'Mon',
+    'duration': Duration(hours: 7, minutes: 30),
+    'rem': Duration(hours: 1, minutes: 30),
+    'light': Duration(hours: 4, minutes: 0),
+    'deep': Duration(hours: 2, minutes: 0),
+    'sleepingTime': DateTime(2024, 10, 1, 23, 0), // Sleep at 11 PM
+    'wakeUpTime': DateTime(2024, 10, 2, 6, 30),   // Wake up at 6:30 AM
+  },
+  {
+    'day': 'Tue',
+    'duration': Duration(hours: 6, minutes: 45),
+    'rem': Duration(hours: 1, minutes: 15),
+    'light': Duration(hours: 3, minutes: 30),
+    'deep': Duration(hours: 2, minutes: 0),
+    'sleepingTime': DateTime(2024, 10, 2, 23, 15), // Sleep at 11:15 PM
+    'wakeUpTime': DateTime(2024, 10, 3, 6, 45),   // Wake up at 6:45 AM
+  },
+  {
+    'day': 'Wed',
+    'duration': Duration(hours: 8, minutes: 0),
+    'rem': Duration(hours: 1, minutes: 45),
+    'light': Duration(hours: 4, minutes: 15),
+    'deep': Duration(hours: 2, minutes: 0),
+    'sleepingTime': DateTime(2024, 10, 3, 22, 30), // Sleep at 10:30 PM
+    'wakeUpTime': DateTime(2024, 10, 4, 6, 30),   // Wake up at 6:30 AM
+  },
+  {
+    'day': 'Thu',
+    'duration': Duration(hours: 7, minutes: 20),
+    'rem': Duration(hours: 1, minutes: 10),
+    'light': Duration(hours: 3, minutes: 50),
+    'deep': Duration(hours: 2, minutes: 20),
+    'sleepingTime': DateTime(2024,10 ,4 ,23 ,5), // Sleep at around midnight
+    'wakeUpTime': DateTime(2024 ,10 ,5 ,6 ,25), // Wake up at around midnight
+   },
+   {
+     'day': 'Fri',
+     'duration': Duration(hours:8 ,minutes :34),
+     'rem' : Duration(hours :4 ,minutes :4),
+     'light' : Duration(hours :2 ,minutes :30),
+     'deep' : Duration(hours :2 ,minutes :0),
+     'sleepingTime' : DateTime(2024 ,10 ,5 ,23 ,0), // Sleep at midnight
+     'wakeUpTime' : DateTime(2024 ,10 ,6 ,7 ,0), // Wake up at around midnight
+   },
+   {
+     'day':'Sat',
+     'duration' :Duration(hours :9 ,minutes :45),
+     'rem' :Duration(hours :3 ,minutes :15),
+     'light' :Duration(hours :3 ,minutes :0),
+     'deep' :Duration(hours :3 ,minutes :30),
+     'sleepingTime' :DateTime(2024 ,10 ,6 ,1 ,0), // Sleep at around midnight
+     'wakeUpTime' :DateTime(2024 ,10 ,6 ,9 ,45), // Wake up at around midnight
+   },
+   {
+     'day':'Sun',
+     'duration' :Duration(hours :8 ,minutes :15),
+     'rem' :Duration(hours :2 ,minutes :15),
+     'light' :Duration(hours :3 ,minutes :0),
+     'deep' :Duration(hours :2 ,minutes :0),
+     'sleepingTime' :DateTime(2024 ,10 ,7 ,23 ,30), // Sleep at around midnight
+     'wakeUpTime' :DateTime(2024 ,10 ,8 ,7 ,45), // Wake up at around midnight
+   },
   ];
 
     List<Map<String, dynamic>> get weeklyChartData {
@@ -121,18 +134,14 @@ bool get isDayView => _isDayView;
   }
 
   String get selectedDaySleepingTime {
-    // Assuming you store sleeping time in your data model
-    // If not, you might want to calculate it based on your data
-    return '23:00 p.m.';
-  }
-  
+    final sleepingTime = selectedDayData['sleepingTime'] as DateTime;
+    return '${sleepingTime.hour.toString().padLeft(2, '0')}:${sleepingTime.minute.toString().padLeft(2, '0')}';
+}
 
-  String get selectedDayWakeUpTime {
-    // Assuming you store wake up time in your data model
-    // If not, you might want to calculate it based on your data
-    return '08:30 a.m.';
-  }
-
+String get selectedDayWakeUpTime {
+    final wakeUpTime = selectedDayData['wakeUpTime'] as DateTime;
+    return '${wakeUpTime.hour.toString().padLeft(2, '0')}:${wakeUpTime.minute.toString().padLeft(2, '0')}';
+}
   // ... (keep the rest of the methods from the previous version)
 
   void toggleView(bool isDay) {
