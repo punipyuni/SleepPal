@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/category_chip.dart';
+import 'category_chip.dart';
 
 class CategoryListWidget extends StatelessWidget {
   final List<String> categories = ['Recent', 'Rain', 'Nature', 'life', 'Meditation'];

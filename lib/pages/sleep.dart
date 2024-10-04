@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../widgets/sleep_header.dart';
-import '../widgets/bedtime_reminder_toggle.dart';
-import '../widgets/sleep_time_toggle.dart';
-import '../widgets/timer_display.dart';
-import '../widgets/relaxing_sound_option.dart';
+import '../widgets/Sleep/sleep_header.dart';
+import '../widgets/Sleep/bedtime_reminder_toggle.dart';
+import '../widgets/Sleep/sleep_time_toggle.dart';
+import '../widgets/Sleep/timer_display.dart';
+import '../widgets/Sleep/relaxing_sound_option.dart';
 import '../widgets/bottom_nav_bar.dart';
 
 class SleepScreen extends StatefulWidget {

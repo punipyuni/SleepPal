@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../widgets/sleep_stat_provider.dart';
+import 'sleep_stat_provider.dart';
 import 'statistic_item.dart';
 import 'sleep_phase_chart.dart';
 import 'sleep_pie_chart.dart';

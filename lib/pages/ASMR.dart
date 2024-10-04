@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/header_widget.dart';
-import '../widgets/category_list.dart';
-import '../widgets/sound_card_list.dart';
+import '../widgets/relaxingSound/header_widget.dart';
+import '../widgets/relaxingSound/category_list.dart';
+import '../widgets/relaxingSound/sound_card_list.dart';
 
 
 class RelaxingSoundPage extends StatefulWidget {

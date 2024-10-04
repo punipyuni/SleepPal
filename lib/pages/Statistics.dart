@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../widgets/day_selector.dart';
-import '../widgets/sleep_phase_chart.dart';
-import '../widgets/sleep_pie_chart.dart';
-import '../widgets/statistic_item.dart';
-import '../widgets/day_week_selector.dart';
-import '../widgets/stats_header.dart';
-import '../widgets/day_stat_view.dart';
+import '../widgets/Stats/day_selector.dart';
+import '../widgets/Stats/sleep_phase_chart.dart';
+import '../widgets/Stats/sleep_pie_chart.dart';
+import '../widgets/Stats/statistic_item.dart';
+import '../widgets/Stats/day_week_selector.dart';
+import '../widgets/Stats/stats_header.dart';
+import '../widgets/Stats/day_stat_view.dart';
 import 'package:provider/provider.dart';
-import '../widgets/sleep_stat_provider.dart';
-import '../widgets/week_stat_view.dart';
+import '../widgets/Stats/sleep_stat_provider.dart';
+import '../widgets/Stats/week_stat_view.dart';
 
 class SleepStatisticsDashboard extends StatelessWidget {
   @override

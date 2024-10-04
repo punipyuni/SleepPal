@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/toggle_option.dart';
+import 'toggle_option.dart';
 
 class SleepTimeToggle extends StatelessWidget {
   const SleepTimeToggle({Key? key}) : super(key: key);

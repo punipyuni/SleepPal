@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/sound_card.dart';
+import 'sound_card.dart';
 
 class SoundCardListWidget extends StatelessWidget {
   final String selectedCategory;

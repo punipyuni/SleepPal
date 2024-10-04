@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/ASMR.dart';
+import '../../pages/ASMR.dart';
 
 class RelaxingSoundOption extends StatelessWidget {
   const RelaxingSoundOption({Key? key}) : super(key: key);

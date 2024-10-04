@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/sound_card_list.dart';
+import 'sound_card_list.dart';
 
 class SoundCard extends StatelessWidget {
   final String title;

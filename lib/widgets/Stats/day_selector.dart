@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/day_button.dart';
-import '../widgets/sleep_stat_provider.dart';
+import 'day_button.dart';
+import 'sleep_stat_provider.dart';
 import 'package:provider/provider.dart';
 
 class DaySelector extends StatelessWidget {

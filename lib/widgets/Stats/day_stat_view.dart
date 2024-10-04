@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../widgets/day_selector.dart';
-import '../widgets/sleep_phase_chart.dart';
-import '../widgets/sleep_pie_chart.dart';
-import '../widgets/statistic_item.dart';
-import '../widgets/sleep_stat_provider.dart';
+import 'day_selector.dart';
+import 'sleep_phase_chart.dart';
+import 'sleep_pie_chart.dart';
+import 'statistic_item.dart';
+import 'sleep_stat_provider.dart';
 import 'package:provider/provider.dart';
 
 class DayStatisticsView extends StatelessWidget {
