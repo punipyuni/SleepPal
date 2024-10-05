@@ -6,6 +6,11 @@ const db = require('../config/db');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
         lowercase: true,

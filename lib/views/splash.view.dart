@@ -20,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset('assets/images/sleep_pal_logo.png'),
+        child: Image.asset('assets/images/SleepPal.png'),
       ),
     );
   }

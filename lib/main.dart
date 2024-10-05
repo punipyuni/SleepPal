@@ -17,7 +17,7 @@ void main() async {
 
 class SleepPal extends StatefulWidget {
   final token;
-  const SleepPal({@required this.token, Key? key}) : super(key: key);
+  const SleepPal({@required this.token, super.key});
   //const SleepPal({super.key});
 
   @override

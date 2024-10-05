@@ -4,14 +4,15 @@ class AppColor {
   static const primaryButtonColor = Color(0xFF6A7BFF);
   static const alertButtonColor = Color(0xFFF43737);
 
-  static const primaryBackgroundColor = LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
+  static const primaryBackgroundColor = RadialGradient(
+    center: Alignment(-1.0, -0.8),
+    radius: 1.3,
     colors: [
-      Color(0xFF2C2C54), // Dark purple color
-      Color(0xFF4B3E75), // Lighter purple at the top
-      Color(0xFF000000), // Black at the bottom
+      Color(0xFF6C51A6),
+      Color(0xFF1A102E),
+      Color(0xFF131417),
     ],
+    stops: [0.17, 0.56, 1.0],
   );
   static const subBackgroundColor = Color(0xFF24262E);
 
