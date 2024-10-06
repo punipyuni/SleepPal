@@ -85,6 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 200,
                 ).p4(),*/
                 const SizedBox(height: 20),
+
                 /// Username Textfield
                 TextField(
                   controller: usernameController,
@@ -99,6 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ).p4().px24(),
                 const SizedBox(height: 20),
+
                 /// Email Textfield
                 /// TODO: Add an email validation (Maybe)
                 TextField(
@@ -117,6 +119,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ).p4().px24(),
                 const SizedBox(height: 20),
+
                 /// Password Textfield
                 /// TODO: Add a password validation (Maybe)
                 /// TODO: Add a re-enter password field (Maybe)
@@ -138,6 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ).p4().px24(),
                 const SizedBox(height: 20),
+
                 /// Sign Up
                 /// TODO: Make Button to TextField Size
                 ElevatedButton(
@@ -150,9 +154,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
+                  child: const Text('Sign Up',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 10),
+
                 /// Sign In Link
                 GestureDetector(
                   onTap: () {
