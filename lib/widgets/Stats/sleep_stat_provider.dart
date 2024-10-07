@@ -169,6 +169,64 @@ String get selectedDayWakeUpTime {
     notifyListeners();
   }
 
+   Duration get averageSleepDuration {
+    final totalDuration = _weeklyData.fold(Duration.zero, (sum, day) => sum + day['duration']);
+    return Duration(minutes: totalDuration.inMinutes ~/ _weeklyData.length);
+  }
+
+  String get averageSleepDurationString {
+    final avg = averageSleepDuration;
+    return '${avg.inHours} hr ${avg.inMinutes.remainder(60)} min';
+  }
+
+  String get bestSleepPattern {
+    // This is a simplified version. You might want to implement a more sophisticated algorithm.
+    final bestDay = _weeklyData.reduce((a, b) => a['duration'] > b['duration'] ? a : b);
+    final sleepTime = bestDay['sleepingTime'] as DateTime;
+    final wakeTime = bestDay['wakeUpTime'] as DateTime;
+    return '${sleepTime.hour.toString().padLeft(2, '0')}:${sleepTime.minute.toString().padLeft(2, '0')} - '
+           '${wakeTime.hour.toString().padLeft(2, '0')}:${wakeTime.minute.toString().padLeft(2, '0')}';
+  }
+
+  double get averageLightSleepPercentage {
+    final totalLight = _weeklyData.fold(0.0, (sum, day) => sum + (day['light'] as Duration).inMinutes);
+    final totalSleep = _weeklyData.fold(0.0, (sum, day) => sum + (day['duration'] as Duration).inMinutes);
+    return (totalLight / totalSleep) * 100;
+  }
+
+  double get averageDeepSleepPercentage {
+    final totalDeep = _weeklyData.fold(0.0, (sum, day) => sum + (day['deep'] as Duration).inMinutes);
+    final totalSleep = _weeklyData.fold(0.0, (sum, day) => sum + (day['duration'] as Duration).inMinutes);
+    return (totalDeep / totalSleep) * 100;
+  }
+
+  double get averageRemSleepPercentage {
+    final totalRem = _weeklyData.fold(0.0, (sum, day) => sum + (day['rem'] as Duration).inMinutes);
+    final totalSleep = _weeklyData.fold(0.0, (sum, day) => sum + (day['duration'] as Duration).inMinutes);
+    return (totalRem / totalSleep) * 100;
+  }
+
+  Duration get averageDeepSleepDuration {
+    final totalDeep = _weeklyData.fold(Duration.zero, (sum, day) => sum + (day['deep'] as Duration));
+    return Duration(minutes: totalDeep.inMinutes ~/ _weeklyData.length);
+  }
+
+  Duration get averageLightSleepDuration {
+    final totalLight = _weeklyData.fold(Duration.zero, (sum, day) => sum + (day['light'] as Duration));
+    return Duration(minutes: totalLight.inMinutes ~/ _weeklyData.length);
+  }
+
+  Duration get averageRemSleepDuration {
+    final totalRem = _weeklyData.fold(Duration.zero, (sum, day) => sum + (day['rem'] as Duration));
+    return Duration(minutes: totalRem.inMinutes ~/ _weeklyData.length);
+  }
+
+  // You can add a method to calculate sleep score if needed
+  int calculateSleepScore() {
+    // Implement your sleep score calculation logic here
+    // This is a placeholder implementation
+    return 81;
+  }
 
   DateTime getDateForIndex(int index) {
     return _currentWeekStart.add(Duration(days: index));
