@@ -1,6 +1,6 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
-import '../widgets/forum_header.dart';
+import '../widgets/Forum/forum_header.dart';
 
 class SleepGPT extends StatefulWidget {
   const SleepGPT({Key? key}) : super(key: key);

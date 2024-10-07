@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/forum_detail.dart';
+import 'forum_detail.dart';
 
 class ForumPostWidget extends StatelessWidget {
   final String title;

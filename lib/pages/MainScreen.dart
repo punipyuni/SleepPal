@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sleeppal_update/pages/Profile.dart';
 import '../pages/chatGPT.dart';
 import 'package:sleeppal_update/pages/chatGPT.dart';
-import '../widgets/forum_post.dart';
+import '../widgets/Forum/forum_post.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../pages/sleep.dart';
 import '../pages/Forum.dart';
@@ -22,11 +23,11 @@ class _MainScreenState extends State<MainScreen> {
 
   // Define the different pages to switch between
   final List<Widget> _pages = [
-    Chatgpt(),  // Replace with your actual SleepGPT page widget
-    Behavior(),  // Replace with your actual Behavior page widget
-    SleepScreen(),   // Replace with your actual Sleep page widget
-    SleepStatisticsDashboard(),// Replace with your actual Statistics page widget
-    ForumPage(),     // ForumPage (your current page)
+    Chatgpt(),  
+    Behavior(),  
+    SleepScreen(),   
+    SleepStatisticsDashboard(),
+    ProfilePage(),     
   ];
 
   // Handle bottom navigation taps

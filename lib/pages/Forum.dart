@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/forum_header.dart';
-import '../widgets/forum_post.dart';
+import '../widgets/Forum/forum_header.dart';
+import '../widgets/Forum/forum_post.dart';
 import '../widgets/bottom_nav_bar.dart'; // Assuming you want to include the BottomNavBar
 import '../pages/sleep.dart'; // Import other screens here as well
 

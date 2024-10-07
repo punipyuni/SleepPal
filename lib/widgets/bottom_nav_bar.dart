@@ -39,8 +39,8 @@ class BottomNavBar extends StatelessWidget {
           label: 'Statistic',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.forum),
-          label: 'Forum',
+          icon: Icon(Icons.person),
+          label: 'Profile',
         ),
       ],
     );
