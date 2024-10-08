@@ -11,9 +11,8 @@ class Chatgpt extends StatefulWidget {
   State<Chatgpt> createState() => _ChatgptState();
 }
 
-// Replace OpenAI instance with a placeholder for OpenRouter API
 final ChatUser currentUser =
-    ChatUser(id: '1', firstName: 'Nigga', lastName: '56');
+    ChatUser(id: '1', firstName: 'User', lastName: 'Name');
 final ChatUser gptChatUser =
     ChatUser(id: '2', firstName: 'Sleep', lastName: 'GPT');
 List<ChatMessage> messages = <ChatMessage>[];
@@ -22,17 +21,37 @@ class _ChatgptState extends State<Chatgpt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('sleepGPT')),
-        body: DashChat(
-            currentUser: currentUser,
-            messageOptions: const MessageOptions(
-                currentUserContainerColor: Colors.black,
-                containerColor: Colors.purple,
-                textColor: Colors.white),
-            onSend: (ChatMessage m) {
-              getChatResponse(m);
-            },
-            messages: messages));
+      appBar: AppBar(
+        title: Text('sleepGPT'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous screen
+          },
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blueAccent, Colors.purpleAccent], // Background gradient colors
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: DashChat(
+          currentUser: currentUser,
+          messageOptions: const MessageOptions(
+            currentUserContainerColor: Colors.black,
+            containerColor: Colors.purple,
+            textColor: Colors.white,
+          ),
+          onSend: (ChatMessage m) {
+            getChatResponse(m);
+          },
+          messages: messages,
+        ),
+      ),
+    );
   }
 
   Future<void> getChatResponse(ChatMessage m) async {
@@ -48,18 +67,17 @@ class _ChatgptState extends State<Chatgpt> {
       }
     }).toList();
 
-    // OpenRouter API call
     final url = Uri.parse('https://openrouter.ai/api/v1/chat/completions');
     final response = await http.post(
       url,
       headers: {
-        'Authorization': 'Bearer $openRouter_API_KEY', // Replace with your OpenRouter API key
+        'Authorization': 'Bearer $openRouter_API_KEY',
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
-        'model': 'nousresearch/hermes-3-llama-3.1-405b:free', // Adjust model if necessary
+        'model': 'nousresearch/hermes-3-llama-3.1-405b:free',
         'messages': messagesHistory,
-        'max_tokens': 200, // Adjust token count based on your needs
+        'max_tokens': 200,
       }),
     );
 
@@ -80,7 +98,6 @@ class _ChatgptState extends State<Chatgpt> {
         }
       }
     } else {
-      // Handle error response
       print('Failed to fetch data from OpenRouter: ${response.statusCode}');
     }
   }

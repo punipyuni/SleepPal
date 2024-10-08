@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sleeppal_update/auth/signup.auth.dart';
 import 'package:sleeppal_update/pages/MainScreen.dart';
 import 'package:sleeppal_update/pages/sleep.dart';
 import 'package:sleeppal_update/widgets/Stats/sleep_stat_provider.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => SleepStatisticsProvider(), // Provide your SleepStatisticsProvider
       child: MaterialApp(
-        home: const MainScreen(),
+        home: SignUpPage(),
       ),
     );
   }
