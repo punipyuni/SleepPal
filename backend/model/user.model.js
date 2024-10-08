@@ -9,7 +9,6 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
     },
     email: {
         type: String,
@@ -22,6 +21,15 @@ const userSchema = new Schema({
         required: true
     }
 });
+
+userSchema.methods.comparePassword = async function(userPassword) {
+    try {
+        const isMatch = await bcrypt.compare(userPassword, this.password);
+        return isMatch;
+    } catch (error) {
+        throw error;
+    }
+}
 
 userSchema.pre('save', async function(next) {
     try{

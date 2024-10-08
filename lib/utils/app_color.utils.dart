@@ -17,5 +17,6 @@ class AppColor {
   static const subBackgroundColor = Color(0xFF24262E);
 
   static const navBarColor = Color(0xFF000000);
-  static const navBarButtonColor = Color(0xFFD3D3D3);
+  static const selectedItemColor = Color(0xFF6A7BFF);
+  static const unselectedItemColor = Color(0xFFD3D3D3);
 }
