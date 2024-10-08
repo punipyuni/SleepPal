@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TimeRangePickerDialog extends StatefulWidget {
@@ -25,6 +26,53 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
     endTime = widget.initialEndTime;
   }
 
+  Future<void> _showCupertinoTimePicker(BuildContext context, bool isStart) async {
+    final TimeOfDay? pickedTime = await showModalBottomSheet<TimeOfDay>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 250,
+          child: Column(
+            children: [
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.time,
+                  use24hFormat: true, // Enable 24-hour format
+                  initialDateTime: DateTime(2020, 1, 1, isStart ? startTime.hour : endTime.hour, isStart ? startTime.minute : endTime.minute),
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    if (isStart) {
+                      setState(() {
+                        startTime = TimeOfDay.fromDateTime(newDateTime);
+                      });
+                    } else {
+                      setState(() {
+                        endTime = TimeOfDay.fromDateTime(newDateTime);
+                      });
+                    }
+                  },
+                ),
+              ),
+              CupertinoButton(
+                child: const Text('Done'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        if (isStart) {
+          startTime = pickedTime;
+        } else {
+          endTime = pickedTime;
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -37,15 +85,7 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
             SizedBox(
               width: double.infinity, // Make button full width
               child: ElevatedButton(
-                onPressed: () async {
-                  final newStartTime = await showTimePicker(
-                    context: context,
-                    initialTime: startTime,
-                  );
-                  if (newStartTime != null) {
-                    setState(() => startTime = newStartTime);
-                  }
-                },
+                onPressed: () => _showCupertinoTimePicker(context, true),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
@@ -64,15 +104,7 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
             SizedBox(
               width: double.infinity, // Make button full width
               child: ElevatedButton(
-                onPressed: () async {
-                  final newEndTime = await showTimePicker(
-                    context: context,
-                    initialTime: endTime,
-                  );
-                  if (newEndTime != null) {
-                    setState(() => endTime = newEndTime);
-                  }
-                },
+                onPressed: () => _showCupertinoTimePicker(context, false),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
