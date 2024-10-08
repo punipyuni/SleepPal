@@ -26,7 +26,8 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
     endTime = widget.initialEndTime;
   }
 
-  Future<void> _showCupertinoTimePicker(BuildContext context, bool isStart) async {
+  Future<void> _showCupertinoTimePicker(
+      BuildContext context, bool isStart) async {
     final TimeOfDay? pickedTime = await showModalBottomSheet<TimeOfDay>(
       context: context,
       builder: (BuildContext context) {
@@ -38,7 +39,12 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.time,
                   use24hFormat: true, // Enable 24-hour format
-                  initialDateTime: DateTime(2020, 1, 1, isStart ? startTime.hour : endTime.hour, isStart ? startTime.minute : endTime.minute),
+                  initialDateTime: DateTime(
+                      2020,
+                      1,
+                      1,
+                      isStart ? startTime.hour : endTime.hour,
+                      isStart ? startTime.minute : endTime.minute),
                   onDateTimeChanged: (DateTime newDateTime) {
                     if (isStart) {
                       setState(() {
@@ -73,6 +79,12 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
     }
   }
 
+  String _formatTo24Hour(TimeOfDay time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -89,13 +101,14 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(32),
                   ),
                   backgroundColor: const Color(0xFF272D42), // Custom color
                 ),
                 child: Text(
-                  'Start Time: ${startTime.format(context)}',
-                  style: const TextStyle(color: Colors.white), // White text color
+                  'Start Time: ${_formatTo24Hour(startTime)}', // Use custom format function
+                  style:
+                      const TextStyle(color: Colors.white), // White text color
                 ),
               ),
             ),
@@ -108,13 +121,14 @@ class _TimeRangePickerDialogState extends State<TimeRangePickerDialog> {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(32),
                   ),
                   backgroundColor: const Color(0xFF272D42), // Custom color
                 ),
                 child: Text(
-                  'End Time: ${endTime.format(context)}',
-                  style: const TextStyle(color: Colors.white), // White text color
+                  'End Time: ${_formatTo24Hour(endTime)}', // Use custom format function
+                  style:
+                      const TextStyle(color: Colors.white), // White text color
                 ),
               ),
             ),
