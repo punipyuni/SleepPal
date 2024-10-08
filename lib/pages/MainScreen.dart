@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   // Define the different pages to switch between
   final List<Widget> _pages = [
     Chatgpt(),  
-    Behavior(),  
+    Behavior(),
     SleepScreen(),   
     SleepStatisticsDashboard(),
     ProfilePage(),     

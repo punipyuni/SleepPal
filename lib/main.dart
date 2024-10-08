@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sleeppal_update/auth/signup.auth.dart';
+import 'package:sleeppal_update/notifi_service.dart';
 import 'package:sleeppal_update/pages/MainScreen.dart';
 import 'package:sleeppal_update/pages/sleep.dart';
 import 'package:sleeppal_update/widgets/Stats/sleep_stat_provider.dart';
-import '../pages/signup_page.dart';
+
 
 void main() {
   runApp(const MyApp());
