@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => SleepStatisticsProvider(), // Provide your SleepStatisticsProvider
       child: MaterialApp(
-        home: SignUpPage(),
+        home: const MainScreen(),
       ),
     );
   }

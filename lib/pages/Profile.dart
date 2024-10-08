@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleeppal_update/utils/app_color.utils.dart';
 import '../widgets/Profile/profile_header.dart'; // Replace with the actual path to your ProfileHeader widget
 
 class ProfilePage extends StatelessWidget {
@@ -10,16 +11,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment(-1.0, -0.8),
-            radius: 1.3,
-            colors: [
-              Color(0xFF6C51A6), // Light purple
-              Color(0xFF1A102E), // Darker shade
-              Color(0xFF131417), // Almost black
-            ],
-            stops: [0.17, 0.56, 1.0],
-          ),
+          gradient: AppColor.primaryBackgroundColor,
         ),
         child: SafeArea(
           child: Padding(

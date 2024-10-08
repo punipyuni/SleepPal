@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:sleeppal_update/utils/app_color.utils.dart';
 import '../widgets/Stats/day_selector.dart';
 import '../widgets/Stats/sleep_phase_chart.dart';
 import '../widgets/Stats/sleep_pie_chart.dart';
@@ -17,16 +18,7 @@ class SleepStatisticsDashboard extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment(-1.0, -0.8),
-            radius: 1.3,
-            colors: [
-              Color(0xFF6C51A6),
-              Color(0xFF1A102E),
-              Color(0xFF131417),
-            ],
-            stops: [0.17, 0.56, 1.0],
-          ),
+          gradient: AppColor.primaryBackgroundColor,
         ),
         child: SafeArea(
           child: Consumer<SleepStatisticsProvider>(

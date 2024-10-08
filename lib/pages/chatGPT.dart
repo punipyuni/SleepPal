@@ -2,7 +2,8 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert'; // For encoding/decoding JSON
 import 'package:http/http.dart' as http;
-import 'package:sleeppal_update/const.dart'; // For making HTTP requests
+import 'package:sleeppal_update/const.dart';
+import 'package:sleeppal_update/utils/app_color.utils.dart'; // For making HTTP requests
 
 class Chatgpt extends StatefulWidget {
   const Chatgpt({super.key});
@@ -22,27 +23,23 @@ class _ChatgptState extends State<Chatgpt> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('sleepGPT'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigate back to the previous screen
-          },
+        backgroundColor: Color(0xFF121317),
+        title: Text(
+          'sleepGPT',
+          style: TextStyle(
+            color: Colors.white, // Set the text color to white
+          ),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.purpleAccent], // Background gradient colors
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          gradient: AppColor.primaryBackgroundColor,
         ),
         child: DashChat(
           currentUser: currentUser,
           messageOptions: const MessageOptions(
-            currentUserContainerColor: Colors.black,
-            containerColor: Colors.purple,
+            currentUserContainerColor: Color(0xFF6A7BFF),
+            containerColor: Color(0xFF49516A),
             textColor: Colors.white,
           ),
           onSend: (ChatMessage m) {
@@ -89,11 +86,12 @@ class _ChatgptState extends State<Chatgpt> {
         var content = element['message']['content'];
         if (content != null) {
           setState(() {
-            messages.insert(0, ChatMessage(
-              user: gptChatUser, 
-              createdAt: DateTime.now(), 
-              text: content
-            ));
+            messages.insert(
+                0,
+                ChatMessage(
+                    user: gptChatUser,
+                    createdAt: DateTime.now(),
+                    text: content));
           });
         }
       }
