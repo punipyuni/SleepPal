@@ -24,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.chat_bubble),
-          label: 'SleepGPT',
+          label: 'sleepGPT',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.psychology),
