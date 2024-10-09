@@ -4,8 +4,6 @@ import 'dart:convert'; // For encoding/decoding JSON
 import 'package:http/http.dart' as http;
 import 'package:sleeppal_update/const.dart';
 import 'package:sleeppal_update/utils/app_color.utils.dart'; // For making HTTP requests
-import 'package:dash_chat_2/dash_chat_2.dart';
-
 
 class Chatgpt extends StatefulWidget {
   const Chatgpt({super.key});
@@ -22,7 +20,7 @@ List<ChatMessage> messages = <ChatMessage>[];
 List<ChatUser> typingUsers = <ChatUser>[];
 
 class _ChatgptState extends State<Chatgpt> {
-  bool _isExpanded = true;
+  bool _showPromptButtons = true; // Control visibility of prompt buttons
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +51,12 @@ class _ChatgptState extends State<Chatgpt> {
               },
               messages: messages,
             ),
-            Positioned(
-              bottom: 70, // Adjust this value as needed
-              right: 16,
-              child: _isExpanded ? _buildExpandedButtons() : _buildToggleButton(),
-            ),
+            if (_showPromptButtons) // Show prompt buttons conditionally
+              Positioned(
+                bottom: 70, // Adjust this value as needed
+                right: 16,
+                child: _buildExpandedButtons(),
+              ),
           ],
         ),
       ),
@@ -72,47 +71,21 @@ class _ChatgptState extends State<Chatgpt> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
-  crossAxisAlignment: CrossAxisAlignment.end,
-  mainAxisSize: MainAxisSize.min,
-  children: [
-    Wrap(
-      spacing: 8.0,
-      runSpacing: 8.0,
-      alignment: WrapAlignment.end,
-      children: [
-        _buildPromptButton("Sleep Quality", "How can I improve my sleep quality?"),
-        _buildPromptButton("Bedtime Routines", "What are some bedtime routines for better sleep?"),
-        _buildPromptButton("Diet and Sleep", "How does diet affect sleep?"),
-      ],
-    ),
-    SizedBox(height: 2),
-    Center( // Center the IconButton
-      child: IconButton(
-        icon: Icon(Icons.keyboard_arrow_down, color: Colors.white),
-        onPressed: () {
-          setState(() {
-            _isExpanded = false;
-          });
-        },
-        padding: EdgeInsets.zero,
-        constraints: BoxConstraints(),
-        iconSize: 24,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Wrap(
+            spacing: 8.0,
+            runSpacing: 8.0,
+            alignment: WrapAlignment.end,
+            children: [
+              _buildPromptButton("Sleep Quality", "How can I improve my sleep quality?"),
+              _buildPromptButton("Bedtime Routines", "What are some bedtime routines for better sleep?"),
+              _buildPromptButton("Diet and Sleep", "How does diet affect sleep?"),
+            ],
+          ),
+        ],
       ),
-    ),
-  ],
-),
-    );
-  }
-
-  Widget _buildToggleButton() {
-    return FloatingActionButton(
-      onPressed: () {
-        setState(() {
-          _isExpanded = true;
-        });
-      },
-      child: Icon(Icons.lightbulb_outline),
-      backgroundColor: Color(0xFF6A7BFF),
     );
   }
 
@@ -121,7 +94,7 @@ class _ChatgptState extends State<Chatgpt> {
       onPressed: () {
         _sendPrompt(prompt);
         setState(() {
-          _isExpanded = false;
+          _showPromptButtons = false; // Hide buttons after tap
         });
       },
       child: Text(
@@ -145,6 +118,7 @@ class _ChatgptState extends State<Chatgpt> {
     );
     getChatResponse(message);
   }
+
   Future<void> getChatResponse(ChatMessage m) async {
     setState(() {
       messages.insert(0, m);
@@ -198,4 +172,3 @@ class _ChatgptState extends State<Chatgpt> {
     }
   }
 }
-
