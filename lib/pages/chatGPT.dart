@@ -15,8 +15,9 @@ class Chatgpt extends StatefulWidget {
 final ChatUser currentUser =
     ChatUser(id: '1', firstName: 'User', lastName: 'Name');
 final ChatUser gptChatUser =
-    ChatUser(id: '2', firstName: 'Sleep', lastName: 'GPT');
+    ChatUser(id: '2', firstName: 'Sleep', lastName: 'Bot');
 List<ChatMessage> messages = <ChatMessage>[];
+List<ChatUser> typingUsers = <ChatUser>[];
 
 class _ChatgptState extends State<Chatgpt> {
   @override
@@ -25,7 +26,7 @@ class _ChatgptState extends State<Chatgpt> {
       appBar: AppBar(
         backgroundColor: Color(0xFF121317),
         title: Text(
-          'sleepGPT',
+          'SleepBot',
           style: TextStyle(
             color: Colors.white, // Set the text color to white
           ),
@@ -37,6 +38,7 @@ class _ChatgptState extends State<Chatgpt> {
         ),
         child: DashChat(
           currentUser: currentUser,
+          typingUsers: typingUsers,
           messageOptions: const MessageOptions(
             currentUserContainerColor: Color(0xFF6A7BFF),
             containerColor: Color(0xFF49516A),
@@ -54,6 +56,7 @@ class _ChatgptState extends State<Chatgpt> {
   Future<void> getChatResponse(ChatMessage m) async {
     setState(() {
       messages.insert(0, m);
+      typingUsers.add(gptChatUser);
     });
 
     List<Map<String, String>> messagesHistory = messages.reversed.map((m) {
@@ -95,6 +98,9 @@ class _ChatgptState extends State<Chatgpt> {
           });
         }
       }
+      setState(() {
+        typingUsers.remove(gptChatUser);
+      });
     } else {
       print('Failed to fetch data from OpenRouter: ${response.statusCode}');
     }
