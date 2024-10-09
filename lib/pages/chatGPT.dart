@@ -4,6 +4,8 @@ import 'dart:convert'; // For encoding/decoding JSON
 import 'package:http/http.dart' as http;
 import 'package:sleeppal_update/const.dart';
 import 'package:sleeppal_update/utils/app_color.utils.dart'; // For making HTTP requests
+import 'package:dash_chat_2/dash_chat_2.dart';
+
 
 class Chatgpt extends StatefulWidget {
   const Chatgpt({super.key});
@@ -20,6 +22,8 @@ List<ChatMessage> messages = <ChatMessage>[];
 List<ChatUser> typingUsers = <ChatUser>[];
 
 class _ChatgptState extends State<Chatgpt> {
+  bool _isExpanded = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,32 +31,120 @@ class _ChatgptState extends State<Chatgpt> {
         backgroundColor: Color(0xFF121317),
         title: Text(
           'SleepBot',
-          style: TextStyle(
-            color: Colors.white, // Set the text color to white
-          ),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppColor.primaryBackgroundColor,
         ),
-        child: DashChat(
-          currentUser: currentUser,
-          typingUsers: typingUsers,
-          messageOptions: const MessageOptions(
-            currentUserContainerColor: Color(0xFF6A7BFF),
-            containerColor: Color(0xFF49516A),
-            textColor: Colors.white,
-          ),
-          onSend: (ChatMessage m) {
-            getChatResponse(m);
-          },
-          messages: messages,
+        child: Stack(
+          children: [
+            DashChat(
+              currentUser: currentUser,
+              typingUsers: typingUsers,
+              messageOptions: const MessageOptions(
+                currentUserContainerColor: Color(0xFF6A7BFF),
+                containerColor: Color(0xFF49516A),
+                textColor: Colors.white,
+              ),
+              onSend: (ChatMessage m) {
+                getChatResponse(m);
+              },
+              messages: messages,
+            ),
+            Positioned(
+              bottom: 70, // Adjust this value as needed
+              right: 16,
+              child: _isExpanded ? _buildExpandedButtons() : _buildToggleButton(),
+            ),
+          ],
         ),
       ),
     );
   }
 
+  Widget _buildExpandedButtons() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.6),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+  crossAxisAlignment: CrossAxisAlignment.end,
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    Wrap(
+      spacing: 8.0,
+      runSpacing: 8.0,
+      alignment: WrapAlignment.end,
+      children: [
+        _buildPromptButton("Sleep Quality", "How can I improve my sleep quality?"),
+        _buildPromptButton("Bedtime Routines", "What are some bedtime routines for better sleep?"),
+        _buildPromptButton("Diet and Sleep", "How does diet affect sleep?"),
+      ],
+    ),
+    SizedBox(height: 2),
+    Center( // Center the IconButton
+      child: IconButton(
+        icon: Icon(Icons.keyboard_arrow_down, color: Colors.white),
+        onPressed: () {
+          setState(() {
+            _isExpanded = false;
+          });
+        },
+        padding: EdgeInsets.zero,
+        constraints: BoxConstraints(),
+        iconSize: 24,
+      ),
+    ),
+  ],
+),
+    );
+  }
+
+  Widget _buildToggleButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        setState(() {
+          _isExpanded = true;
+        });
+      },
+      child: Icon(Icons.lightbulb_outline),
+      backgroundColor: Color(0xFF6A7BFF),
+    );
+  }
+
+  Widget _buildPromptButton(String label, String prompt) {
+    return ElevatedButton(
+      onPressed: () {
+        _sendPrompt(prompt);
+        setState(() {
+          _isExpanded = false;
+        });
+      },
+      child: Text(
+        label,
+        style: TextStyle(fontSize: 12),
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF6A7BFF),
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        minimumSize: Size(100, 36),
+      ),
+    );
+  }
+
+  void _sendPrompt(String prompt) {
+    ChatMessage message = ChatMessage(
+      text: prompt,
+      user: currentUser,
+      createdAt: DateTime.now(),
+    );
+    getChatResponse(message);
+  }
   Future<void> getChatResponse(ChatMessage m) async {
     setState(() {
       messages.insert(0, m);
@@ -106,3 +198,4 @@ class _ChatgptState extends State<Chatgpt> {
     }
   }
 }
+
