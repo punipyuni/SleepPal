@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sleeppal_update/auth/login.auth.dart';
 
 import 'behavior_analysis.view.dart';
 import 'profile.view.dart';
 import 'sleep_tracking.view.dart';
-import 'sleepgpt.view.dart';
+import 'sleepbot.view.dart';
 import 'statistic.view.dart';
 
 import '../utils/widgets/bottom_nav_bar.widgets.dart';
@@ -19,19 +21,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late String userId;
+  late SharedPreferences prefs;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-    userId = jwtDecodedToken['_id'];
+    initSharedPreferences();
+  }
+
+  void initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
   }
 
   int _selectedIndex = 2;
 
   final List<Widget> _pages = [
     // Index 0
-    const SleepGPTPage(),
+    const SleepBot(),
     // Index 1
     const BehaviorAnalysisPage(),
     // Index 2
@@ -39,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Index 3
     const StatisticPage(),
     // Index 4
-    const ProfilePage(),
+    const ProfilePage(token: null),
     // Index 5
     // ForumPage(),
   ];

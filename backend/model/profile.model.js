@@ -10,6 +10,10 @@ const profileSchema = new Schema({
         ref: UserModel.modelName,
         required: true,
     },
+    userName: {
+        type: Schema.Types.String,
+        ref: UserModel.userName,
+    },
     image_background: {
         type: String,
     },
