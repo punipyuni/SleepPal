@@ -5,43 +5,101 @@ import '../widgets/Profile/profile_header.dart'; // Replace with the actual path
 class ProfilePage extends StatelessWidget {
   final String email = 'user@example.com'; // Replace with actual user email
   final String profileImageUrl = 'https://example.com/profile.jpg'; // Replace with actual image URL
+  final String weight = '70 kg'; // Replace with actual user weight
+  final String height = '175 cm'; // Replace with actual user height
+  final String bloodGroup = 'O+'; // Replace with actual user blood group
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: AppColor.primaryBackgroundColor,
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ProfileHeader(), // Use the ProfileHeader widget here
-                SizedBox(height: 20),
-                Center( // Center the following widgets within their own container
+                /// Profile image
+                Center(
                   child: CircleAvatar(
                     radius: 50,
                     backgroundImage: NetworkImage(profileImageUrl),
                   ),
                 ),
-                SizedBox(height: 20),
-                Center( // Center the text as well
+
+                const SizedBox(height: 20),
+
+                /// Email
+                Center(
                   child: Text(
-                    email,
-                    style: TextStyle(fontSize: 18, color: Colors.white), // Optional: Change text color for better contrast
+                    email, // Displaying the user's email
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Center( // Center the button too
+
+                const SizedBox(height: 20),
+
+                /// Weight
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.fitness_center, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Weight: $weight',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 10),
+
+                /// Height
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.height, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Height: $height',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 10),
+
+                /// Blood Group
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.bloodtype, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Blood Group: $bloodGroup',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                /// Sign out button
+                Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Add sign out logic here
-                      print('Sign out button pressed');
+                    onPressed: () => {
+                      print('Sign out'),
                     },
-                    child: Text('Sign Out'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.alertButtonColor,
+                    ),
+                    child: const Text('Sign Out', style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ],
