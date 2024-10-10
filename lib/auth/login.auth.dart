@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sleeppal_update/auth/signup.auth.dart';
 import 'package:sleeppal_update/utils/app_color.utils.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -38,13 +40,13 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
-                  Icon(
-                    Icons.nightlight_round,
-                    size: 100,
-                    color: Colors.amber,
-                  ),
-                  const SizedBox(height: 50),
+                  /// Logo
+                  Image.asset(
+                    'assets/images/sleeppal.png',
+                    width: 200,
+                    height: 200,
+                  ).p4(),
+                  const SizedBox(height: 20),
                   TextField(
                     controller: emailController,
                     style: TextStyle(color: Colors.white),
@@ -77,17 +79,51 @@ class _LoginPageState extends State<LoginPage> {
                       errorText: _isNotValidate ? 'Enter valid password' : null,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: loginUser,
                     child: Text('Log in'),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: AppColor.primaryButtonColor,
+                      foregroundColor: Colors.white,
+                      backgroundColor: AppColor.primaryButtonColor,
                       minimumSize: Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  /// Sign Up Link
+                  GestureDetector(
+                    onTap: () {
+                      print("Sign Up");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpPage()));
+                    },
+                    child: HStack([
+                      "Haven't Create an Account? ".text.white.make(),
+                      "Sign Up".text.blue600.make(),
+                    ]).centered(),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  /// Forgot Password Link
+                  GestureDetector(
+                    onTap: () {
+                      print("Forgot Password");
+                      Navigator.push(
+                          context,
+                          // TODO: Forgot Password Page
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()));
+                    },
+                    child: HStack([
+                      "Forgot Your Password?".text.blue600.make(),
+                    ]).centered(),
                   ),
                 ],
               ),

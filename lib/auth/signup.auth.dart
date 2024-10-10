@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
               children: <Widget>[
                 /// Logo
                 Image.asset(
-                  'assets/images/SleepPal.png',
+                  'assets/images/sleeppal.png',
                   width: 200,
                   height: 200,
                 ).p4(),
@@ -42,13 +42,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 /// Username Textfield
                 TextField(
                   controller: usernameController,
-                  style: const TextStyle(color: Colors.white), // Input text color
+                  style:
+                      const TextStyle(color: Colors.white), // Input text color
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.1), // Form background color
+                    fillColor:
+                        Colors.white.withOpacity(0.1), // Form background color
                     hintText: 'Username',
-                    hintStyle: const TextStyle(color: Colors.white), // Hint text color
+                    hintStyle:
+                        const TextStyle(color: Colors.white), // Hint text color
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(16.0)),
                     ),
@@ -59,16 +62,19 @@ class _SignUpPageState extends State<SignUpPage> {
                 /// Email Textfield
                 TextField(
                   controller: emailController,
-                  style: const TextStyle(color: Colors.white), // Input text color
+                  style:
+                      const TextStyle(color: Colors.white), // Input text color
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.1), // Form background color
+                    fillColor:
+                        Colors.white.withOpacity(0.1), // Form background color
                     errorStyle: const TextStyle(color: Colors.white),
                     errorText:
                         _isNotValidate ? 'Please enter a valid email' : null,
                     hintText: 'Email',
-                    hintStyle: const TextStyle(color: Colors.white), // Hint text color
+                    hintStyle:
+                        const TextStyle(color: Colors.white), // Hint text color
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(16.0)),
                     ),
@@ -79,17 +85,20 @@ class _SignUpPageState extends State<SignUpPage> {
                 /// Password Textfield
                 TextField(
                   controller: passwordController,
-                  style: const TextStyle(color: Colors.white), // Input text color
+                  style:
+                      const TextStyle(color: Colors.white), // Input text color
                   keyboardType: TextInputType.text,
                   obscureText: true,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.1), // Form background color
+                    fillColor:
+                        Colors.white.withOpacity(0.1), // Form background color
                     errorStyle: const TextStyle(color: Colors.white),
                     errorText:
                         _isNotValidate ? 'Please enter a valid password' : null,
                     hintText: 'Password',
-                    hintStyle: const TextStyle(color: Colors.white), // Hint text color
+                    hintStyle:
+                        const TextStyle(color: Colors.white), // Hint text color
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(16.0)),
                     ),
@@ -109,8 +118,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child:
-                      const Text('Sign Up', style: TextStyle(color: Colors.white)),
+                  child: const Text('Sign Up',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 10),
 
@@ -122,11 +131,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         MaterialPageRoute(
                             builder: (context) => const LoginPage()));
                   },
-                  child:
-                      HStack([
-                        "Already have an account? ".text.white.make(),
-                        "Sign In".text.blue600.make(),
-                      ]).centered(),
+                  child: HStack([
+                    "Already have an account? ".text.white.make(),
+                    "Sign In".text.blue600.make(),
+                  ]).centered(),
                 ),
               ],
             ),
