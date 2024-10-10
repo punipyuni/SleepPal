@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sleeppal_update/pages/Profile.dart';
 import '../pages/chatGPT.dart';
 import 'package:sleeppal_update/pages/chatGPT.dart';
-import '../widgets/Forum/forum_post.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../pages/sleep.dart';
-import '../pages/Forum.dart';
 import '../pages/Statistics.dart';
 import '../pages/Behavior.dart';
-import '../pages/sleepGPT.dart';
 
 
 class MainScreen extends StatefulWidget {
