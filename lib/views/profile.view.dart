@@ -19,7 +19,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late String username;
 
-  final String profileImageUrl = 'https://example.com/profile.jpg';
+  final String profileImageUrl = '';
 
   @override
   void initState() {

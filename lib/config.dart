@@ -1,5 +1,5 @@
 /// Change localhost to your IP address before testing!
-final url = "http://192.168.10.100:3000";
+final url = "http://10.4.152.237:3000";
 
 /// OpenRoutes API Key
 /// Model = Hermes-3-Llama-3.1-405B

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool _isNotValidate = false;
   late SharedPreferences prefs;
+
+  final String logoUrl = 'assets/images/sleeppal.svg';
 
   @override
   void initState() {
@@ -77,11 +80,11 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   /// Logo
-                  Image.asset(
-                    'assets/images/SleepPal.png',
+                  SvgPicture.asset(
+                    logoUrl,
                     width: 200,
                     height: 200,
-                  ).p4(),
+                  ),
 
                   const SizedBox(height: 20),
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:velocity_x/velocity_x.dart';
@@ -22,6 +23,8 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool _isNotValidate = false;
+
+  final String logoUrl = 'assets/images/sleeppal.svg';
 
   void registerUser() async {
     if (usernameController.text.isNotEmpty &&
@@ -58,8 +61,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        //width: MediaQuery.of(context).size.width,
-        //height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: AppColor.primaryBackgroundColor,
         ),
@@ -70,18 +73,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   /// Logo
-                  Image.asset(
+                  /*Image.asset(
                     'assets/images/SleepPal.png',
                     width: 200,
                     height: 200,
-                  ).p4(),
-
-                  /// TODO: Transparent Background for Logo
-                  /*Image.asset(
-                    'assets/images/sleeppal.svg',
+                  ).p4(),*/
+                  SvgPicture.asset(
+                    logoUrl,
                     width: 200,
                     height: 200,
-                  ).p4(),*/
+                  ).p4(),
 
                   const SizedBox(height: 20),
 
@@ -110,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.1),
                       errorStyle: const TextStyle(color: Colors.white),
                       errorText:
                           _isNotValidate ? 'Please enter a valid email' : null,
@@ -133,7 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.1),
                       errorStyle: const TextStyle(color: Colors.white),
                       errorText: _isNotValidate
                           ? 'Please enter a valid password'
@@ -156,7 +157,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: AppColor.primaryButtonColor,
-                      minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16.0)),
                       ),

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
 const db = require('../config/db');
 
 const { Schema } = mongoose;
@@ -8,19 +7,22 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     username: {
         type: String,
-        required: true,
     },
     email: {
         type: String,
         lowercase: true,
-        required: true,
-        unique: true
+        required: [true, "Email is required"],
+        match: [
+            /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
+            "Email format is not correct",
+        ],
+        unique: true,
     },
     password: {
         type: String,
-        required: true
-    }
-});
+        required: [true, "Password is required"],
+    },
+},{timestamps:true});
 
 userSchema.methods.comparePassword = async function(userPassword) {
     try {

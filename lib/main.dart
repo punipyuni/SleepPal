@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sleeppal_update/views/home.view.dart';
 
 import '../auth/signup.auth.dart';
 import '../views/profile.view.dart';
@@ -25,7 +26,7 @@ class SleepPal extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.sleepPalTheme,
       home: (token != null && JwtDecoder.isExpired(token) == false)
-          ? ProfilePage(token: token)
+          ? HomeScreen(token: token)
           : const SignUpPage(),
     );
   }

@@ -11,6 +11,14 @@ class UserService {
     }
   }
 
+  static async getUserByEmail(email) {
+    try {
+      return await UserModel.findOne({ email });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   static async checkUser(email) {
     try {
       return await UserModel.findOne({ email });
