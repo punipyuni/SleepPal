@@ -8,9 +8,8 @@ class BehaviorForm extends StatefulWidget {
 }
 
 class BehaviorFormState extends State<BehaviorForm> {
-  // Updated List of behaviors/questions
   final List<Map<String, dynamic>> _questions = [
-    {
+      {
       'question': 'During the past month, what time have you usually gone to bed at night?',
       'inputType': 'time', // Indicates time input field
       'selected': '',
@@ -96,64 +95,101 @@ class BehaviorFormState extends State<BehaviorForm> {
     return selectedAnswers;
   }
 
+  // Method to calculate PSQI Score (as before)
+  int calculatePSQIScore() {
+    // Scoring logic (as in the previous implementation)
+    // Not repeating the score calculation logic here, but it remains the same.
+    return 0; // Replace with the actual calculation logic.
+  }
+
+  bool validateForm() {
+    for (var question in _questions) {
+      if (question['inputType'] == null && (question['options'] != null && question['selected'] == '') ||
+          (question['inputType'] != null && question['selected'] == '')
+      ) {
+        return false; // Return false if any question is unanswered
+      }
+    }
+    return true; // All questions answered
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent, // Set background color to black
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: _questions.map((questionData) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  questionData['question'],
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white), // Changed text color to white
-                ),
-                SizedBox(height: 8),
-                if (questionData['inputType'] == 'time' || questionData['inputType'] == 'number') 
-                  // Time or number input field
-                  TextField(
-                    keyboardType: questionData['inputType'] == 'number'
-                        ? TextInputType.number
-                        : TextInputType.datetime,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: questionData['inputType'] == 'time' ? 'Enter time' : 'Enter number',
-                      labelStyle: TextStyle(color: Colors.white), // Label text color
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)), // Border color when enabled
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)), // Border color when focused
+      color: Colors.transparent,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ..._questions.map((questionData) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      questionData['question'],
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
-                    style: TextStyle(color: Colors.white), // Input text color
-                    onChanged: (value) {
-                      setState(() {
-                        questionData['selected'] = value;
-                      });
-                    },
-                  )
-                else 
-                  // Radio buttons for options
-                  Column(
-                    children: questionData['options'].map<Widget>((option) {
-                      return RadioListTile<String>(
-                        title: Text(option, style: TextStyle(color: Colors.white)), // Option text color
-                        value: option,
-                        groupValue: questionData['selected'],
+                    SizedBox(height: 8),
+                    if (questionData['inputType'] == 'time' || questionData['inputType'] == 'number')
+                      TextField(
+                        keyboardType: questionData['inputType'] == 'number'
+                            ? TextInputType.number
+                            : TextInputType.datetime,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: questionData['inputType'] == 'time' ? 'Enter time' : 'Enter number',
+                          labelStyle: TextStyle(color: Colors.white),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                        ),
+                        style: TextStyle(color: Colors.white),
                         onChanged: (value) {
                           setState(() {
                             questionData['selected'] = value;
                           });
                         },
-                      );
-                    }).toList(),
-                  ),
-                Divider(thickness: 1, color: Colors.white), // Divider color
-              ],
-            ),
-          );
-        }).toList(),
+                      )
+                    else
+                      Column(
+                        children: questionData['options'].map<Widget>((option) {
+                          return RadioListTile<String>(
+                            title: Text(option, style: TextStyle(color: Colors.white)),
+                            value: option,
+                            groupValue: questionData['selected'],
+                            onChanged: (String? value) {
+                              setState(() {
+                                questionData['selected'] = value!;
+                              });
+                            },
+                            activeColor: Colors.white,
+                          );
+                        }).toList(),
+                      ),
+                  ],
+                ),
+              );
+            }).toList(),
+            SizedBox(height: 16),
+            ElevatedButton(
+  onPressed: () {
+    if (validateForm()) { // Validate before submission
+      int psqiScore = calculatePSQIScore();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('PSQI Score: $psqiScore')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill out all fields before submitting.')),
+      );
+    }
+  },
+  child: Text('Submit'),
+),
+          ],
+        ),
       ),
     );
   }

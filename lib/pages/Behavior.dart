@@ -36,16 +36,7 @@ class _BehaviorState extends State<Behavior> {
                     child: BehaviorForm(key: _formKey),
                   ),
                 ),
-                ElevatedButton(
-                  child: Text('Submit'),
-                  onPressed: () {
-                    // Access the form data
-                    Map<String, String> selectedBehaviors =
-                        _formKey.currentState!.getSelectedBehaviors();
-                    // Do something with the data (e.g., save to database, send to API, etc.)
-                    print(selectedBehaviors);
-                  },
-                ),
+                 
               ],
             ),
           ),
