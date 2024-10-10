@@ -195,7 +195,7 @@ class SleepScoreWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Sleep Score', style: TextStyle(color: Colors.white70)),
+              Text('Sleep Score (AVG)', style: TextStyle(color: Colors.white70)),
               SizedBox(height: 8),
               Text('$score Points',
                   style: TextStyle(
