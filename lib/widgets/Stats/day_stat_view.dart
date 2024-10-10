@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:sleeppal_update/widgets/Stats/daily_sleep_score.dart';
 import 'day_selector.dart';
 import 'sleep_phase_chart.dart';
 import 'sleep_pie_chart.dart';
@@ -34,6 +35,8 @@ class DayStatisticsView extends StatelessWidget {
             ),
             SizedBox(height: 24),
             SleepPhaseChart(),
+            SizedBox(height: 24),
+            DailySleepScoreWidget(),
             SizedBox(height: 24),
             SleepTypesPieChart()
           ],
