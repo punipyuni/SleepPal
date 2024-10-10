@@ -17,7 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late String username;
+  late String userid;
 
   final String profileImageUrl = '';
 
@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
 
-    username = jwtDecodedToken['username'];
+    userid = jwtDecodedToken['_id'];
   }
 
   @override
@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 /// Email
                 Text(
-                  username,
+                  userid,
                   style: const TextStyle(
                     color: Colors.white,
                   ),
