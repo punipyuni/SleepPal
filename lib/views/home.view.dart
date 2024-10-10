@@ -18,6 +18,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late String userId;
+
+  @override
+  void initState() {
+    super.initState();
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    userId = jwtDecodedToken['_id'];
+  }
+
   int _selectedIndex = 2;
 
   final List<Widget> _pages = [
@@ -34,15 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // Index 5
     // ForumPage(),
   ];
-
-  late String userId;
-
-  @override
-  void initState() {
-    super.initState();
-    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-    userId = jwtDecodedToken['_id'];
-  }
 
   void _onItemTapped(int index) {
     setState(() {

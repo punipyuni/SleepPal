@@ -26,7 +26,7 @@ class SleepPal extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.sleepPalTheme,
       home: (token != null && JwtDecoder.isExpired(token) == false)
-          ? HomeScreen(token: token)
+          ? ProfilePage(token: token)
           : const SignUpPage(),
     );
   }
