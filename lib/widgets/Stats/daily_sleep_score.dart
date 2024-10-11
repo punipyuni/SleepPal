@@ -8,10 +8,7 @@ class DailySleepScoreWidget extends StatelessWidget {
     final sleepStats = Provider.of<SleepStatisticsProvider>(context);
     final selectedDayData = sleepStats.selectedDayData;
     
-    final deepSleepDuration = selectedDayData['deep'] as Duration;
-    final totalSleepDuration = selectedDayData['duration'] as Duration;
-    
-    final score = _calculateDailySleepScore(deepSleepDuration, totalSleepDuration);
+    final score = _calculateDailySleepScore(selectedDayData);
 
     return Container(
       padding: EdgeInsets.all(16),
@@ -20,26 +17,24 @@ class DailySleepScoreWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start, // Align items to start
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Score section on the left
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Sleep Score (Daily)', style: TextStyle(color: Colors.white70)),
               SizedBox(height: 8),
-              Text('$score Points',
+              Text('${score.round()} Points',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
             ],
           ),
-          SizedBox(width: 20), // Add space between score and progress section
-          // Progress section on the right
+          SizedBox(width: 20),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Align emojis and progress bar to start
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +44,7 @@ class DailySleepScoreWidget extends StatelessWidget {
                     _buildEmojiIndicator('😊', 'High'),
                   ],
                 ),
-                SizedBox(height: 4), // Space between emojis and progress bar
+                SizedBox(height: 4),
                 LinearProgressIndicator(
                   value: score / 100,
                   backgroundColor: Colors.white24,
@@ -72,21 +67,46 @@ class DailySleepScoreWidget extends StatelessWidget {
     );
   }
 
-  int _calculateDailySleepScore(Duration deepSleep, Duration totalSleep) {
-    // Calculate the percentage of deep sleep
-    double deepSleepPercentage = deepSleep.inMinutes / totalSleep.inMinutes * 100;
+ double _calculateDailySleepScore(Map<String, dynamic> dayData) {
+  // Extract durations from data
+  final Duration deepSleep = dayData['deep'] as Duration;
+  final Duration remSleep = dayData['rem'] as Duration;
+  final Duration lightSleep = dayData['light'] as Duration;
+  final Duration awake = dayData['awake'] as Duration;
 
-    // Base score on deep sleep percentage
-    int score = (deepSleepPercentage * 2).round(); // 2 points per percentage
+  // Convert all durations to minutes
+  final int deepSleepMinutes = deepSleep.inHours * 60 + deepSleep.inMinutes.remainder(60);
+  final int remSleepMinutes = remSleep.inHours * 60 + remSleep.inMinutes.remainder(60);
+  final int lightSleepMinutes = lightSleep.inHours * 60 + lightSleep.inMinutes.remainder(60);
+  final int totalSleepMinutes = deepSleepMinutes + remSleepMinutes + lightSleepMinutes;
+  final int awakeMinutes = awake.inHours * 60 + awake.inMinutes.remainder(60);
 
-    // Adjust score based on total sleep duration
-    if (totalSleep.inHours >= 7 && totalSleep.inHours <= 9) {
-      score += 20; // Bonus for ideal sleep duration
-    } else if (totalSleep.inHours < 6 || totalSleep.inHours > 10) {
-      score -= 10; // Penalty for too little or too much sleep
-    }
+  // Calculate percentages
+  final double deepPercentage = deepSleepMinutes / totalSleepMinutes;
+  final double remPercentage = remSleepMinutes / totalSleepMinutes;
+  final double lightPercentage = lightSleepMinutes / totalSleepMinutes;
+  final double awakePercentage = awakeMinutes / (totalSleepMinutes + awakeMinutes);
 
-    // Ensure score is within 0-100 range
-    return score.clamp(0, 100);
-  }
+  // Define ideal percentages
+  const double deepIdeal = 0.25;  // 25%
+  const double remIdeal = 0.25;   // 25%
+  const double lightIdeal = 0.50; // 50%
+
+  // Define weights
+  const double wDeep = 0.4;
+  const double wRem = 0.4;
+  const double wLight = 0.2;
+
+  // Calculate score components
+  final double deepScore = wDeep * (deepPercentage / deepIdeal);
+  final double remScore = wRem * (remPercentage / remIdeal);
+  final double lightScore = wLight * (lightPercentage / lightIdeal);
+
+  // Calculate final score
+  double score = 100 * (deepScore + remScore + lightScore - awakePercentage);
+  
+  // Round to nearest integer and clamp between 0 and 100
+  return score.round().toDouble().clamp(0, 100);
+}
+
 }

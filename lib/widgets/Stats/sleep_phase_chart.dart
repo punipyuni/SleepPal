@@ -57,6 +57,10 @@ class SleepPhaseChart extends StatelessWidget {
                             return Text('REM',
                                 style: TextStyle(
                                     color: Colors.white70, fontSize: 10));
+                          case 3:
+                            return Text('Awake',
+                                style: TextStyle(
+                                    color: Colors.white70, fontSize: 10));
                           default:
                             return Text('');
                         }
@@ -74,7 +78,7 @@ class SleepPhaseChart extends StatelessWidget {
                 minX: 0,
                 maxX: 8,
                 minY: -1,
-                maxY: 3,
+                maxY: 4, // Adjusted maxY to accommodate 'Awake'
                 lineBarsData: [
                   LineChartBarData(
                     spots: [
@@ -108,14 +112,11 @@ class SleepPhaseChart extends StatelessWidget {
                 ],
                 extraLinesData: ExtraLinesData(
                   horizontalLines: [
-                    HorizontalLine(
-                        y: -0.5, color: Colors.white.withOpacity(0.2)),
-                    HorizontalLine(
-                        y: 0.5, color: Colors.white.withOpacity(0.2)),
-                    HorizontalLine(
-                        y: 1.5, color: Colors.white.withOpacity(0.2)),
-                    HorizontalLine(
-                        y: 2.5, color: Colors.white.withOpacity(0.2)),
+                    HorizontalLine(y: -0.5, color: Colors.white.withOpacity(0.2)),
+                    HorizontalLine(y: 0.5, color: Colors.white.withOpacity(0.2)),
+                    HorizontalLine(y: 1.5, color: Colors.white.withOpacity(0.2)),
+                    HorizontalLine(y: 2.5, color: Colors.white.withOpacity(0.2)),
+                    HorizontalLine(y: 3.5, color: Colors.white.withOpacity(0.2)), // Added line for Awake
                   ],
                 ),
               ),

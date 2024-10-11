@@ -30,7 +30,7 @@ class WeekStatisticsView extends StatelessWidget {
             SizedBox(height: 16),
             StatisticItem(title: 'Best Sleep Pattern', value: provider.bestSleepPattern),
             SizedBox(height: 24),
-            SleepScoreWidget(score: provider.calculateSleepScore()),
+            WeeklySleepScoreWidget(),
             SizedBox(height: 24),
             SleepPhasesWidget(),
             SizedBox(height: 24),
@@ -175,13 +175,15 @@ class _WeeklyBarChartState extends State<WeeklyBarChart>
   }
 }
 
-class SleepScoreWidget extends StatelessWidget {
-  final int score;
 
-  SleepScoreWidget({required this.score});
-
+class WeeklySleepScoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final sleepStats = Provider.of<SleepStatisticsProvider>(context);
+    final weeklyData = sleepStats.weeklyData;
+    
+    double averageScore = _calculateWeeklyAverageSleepScore(weeklyData);
+
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -189,26 +191,24 @@ class SleepScoreWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start, // Align items to start
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Score section on the left
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Sleep Score (AVG)', style: TextStyle(color: Colors.white70)),
+              Text('Sleep Score (Weekly AVG)', style: TextStyle(color: Colors.white70)),
               SizedBox(height: 8),
-              Text('$score Points',
+              Text('${averageScore.round()} Points',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
             ],
           ),
-          SizedBox(width: 20), // Add space between score and progress section
-          // Progress section on the right
+          SizedBox(width: 20),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Align emojis and progress bar to start
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,9 +218,9 @@ class SleepScoreWidget extends StatelessWidget {
                     _buildEmojiIndicator('😊', 'High'),
                   ],
                 ),
-                SizedBox(height: 4), // Space between emojis and progress bar
+                SizedBox(height: 4),
                 LinearProgressIndicator(
-                  value: score / 100,
+                  value: averageScore / 100,
                   backgroundColor: Colors.white24,
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                 ),
@@ -240,6 +240,58 @@ class SleepScoreWidget extends StatelessWidget {
       ],
     );
   }
+
+  double _calculateWeeklyAverageSleepScore(List<Map<String, dynamic>> weeklyData) {
+    double totalScore = 0;
+
+    for (var dayData in weeklyData) {
+      totalScore += _calculateDailySleepScore(dayData);
+    }
+
+    return totalScore / weeklyData.length;
+  }
+
+   double _calculateDailySleepScore(Map<String, dynamic> dayData) {
+  // Extract durations from data
+  final Duration deepSleep = dayData['deep'] as Duration;
+  final Duration remSleep = dayData['rem'] as Duration;
+  final Duration lightSleep = dayData['light'] as Duration;
+  final Duration awake = dayData['awake'] as Duration;
+
+  // Convert all durations to minutes
+  final int deepSleepMinutes = deepSleep.inHours * 60 + deepSleep.inMinutes.remainder(60);
+  final int remSleepMinutes = remSleep.inHours * 60 + remSleep.inMinutes.remainder(60);
+  final int lightSleepMinutes = lightSleep.inHours * 60 + lightSleep.inMinutes.remainder(60);
+  final int totalSleepMinutes = deepSleepMinutes + remSleepMinutes + lightSleepMinutes;
+  final int awakeMinutes = awake.inHours * 60 + awake.inMinutes.remainder(60);
+
+  // Calculate percentages
+  final double deepPercentage = deepSleepMinutes / totalSleepMinutes;
+  final double remPercentage = remSleepMinutes / totalSleepMinutes;
+  final double lightPercentage = lightSleepMinutes / totalSleepMinutes;
+  final double awakePercentage = awakeMinutes / (totalSleepMinutes + awakeMinutes);
+
+  // Define ideal percentages
+  const double deepIdeal = 0.25;  // 25%
+  const double remIdeal = 0.25;   // 25%
+  const double lightIdeal = 0.50; // 50%
+
+  // Define weights
+  const double wDeep = 0.4;
+  const double wRem = 0.4;
+  const double wLight = 0.2;
+
+  // Calculate score components
+  final double deepScore = wDeep * (deepPercentage / deepIdeal);
+  final double remScore = wRem * (remPercentage / remIdeal);
+  final double lightScore = wLight * (lightPercentage / lightIdeal);
+
+  // Calculate final score
+  double score = 100 * (deepScore + remScore + lightScore - awakePercentage);
+  
+  // Round to nearest integer and clamp between 0 and 100
+  return score.round().toDouble().clamp(0, 100);
+}
 }
 
 class SleepPhasesWidget extends StatelessWidget {

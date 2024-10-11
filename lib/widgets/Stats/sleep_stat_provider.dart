@@ -21,13 +21,13 @@ class SleepStatisticsProvider with ChangeNotifier {
   List<Map<String, dynamic>> _weeklyData = [
   {
     'day': 'Mon',
-    'duration': Duration(hours: 7, minutes: 30),
-    'rem': Duration(hours: 1, minutes: 30),
+    'duration': Duration(hours: 6, minutes: 0),
+    'rem': Duration(hours: 0, minutes: 30),
     'light': Duration(hours: 4, minutes: 0),
-    'deep': Duration(hours: 2, minutes: 0),
-    'awake': Duration(minutes: 15),
+    'deep': Duration(hours: 0, minutes: 30),
+    'awake': Duration(minutes: 30),
     'sleepingTime': DateTime(2024, 10, 1, 23, 0), // Sleep at 11 PM
-    'wakeUpTime': DateTime(2024, 10, 2, 6, 30),   // Wake up at 6:30 AM
+    'wakeUpTime': DateTime(2024, 10, 2, 5, 0),   // Wake up at 6:30 AM
     'sleepStages': [
       {'stage': 'light', 'start': '23:00', 'end': '00:00'},
       {'stage': 'deep', 'start': '00:00', 'end': '02:00'},
@@ -38,13 +38,13 @@ class SleepStatisticsProvider with ChangeNotifier {
   },
   {
     'day': 'Tue',
-    'duration': Duration(hours: 6, minutes: 45),
-    'rem': Duration(hours: 1, minutes: 15),
-    'light': Duration(hours: 3, minutes: 30),
-    'deep': Duration(hours: 2, minutes: 0),
-    'awake': Duration(minutes: 10),
+    'duration': Duration(hours: 5, minutes: 0),
+    'rem': Duration(hours: 1, minutes: 0),
+    'light': Duration(hours: 3, minutes: 15),
+    'deep': Duration(hours: 0, minutes: 45),
+    'awake': Duration(minutes: 15),
     'sleepingTime': DateTime(2024, 10, 2, 23, 15), // Sleep at 11:15 PM
-    'wakeUpTime': DateTime(2024, 10, 3, 6, 45),   // Wake up at 6:45 AM
+    'wakeUpTime': DateTime(2024, 10, 3, 4, 15),   // Wake up at 6:45 AM
     'sleepStages': [
       {'stage': 'light', 'start': '23:15', 'end': '23:45'},
       {'stage': 'deep', 'start': '23:45', 'end': '01:45'},
@@ -293,4 +293,6 @@ String get selectedDayWakeUpTime {
   DateTime getDateForIndex(int index) {
     return _currentWeekStart.add(Duration(days: index));
   }
+  
 }
+
