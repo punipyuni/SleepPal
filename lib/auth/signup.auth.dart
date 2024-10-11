@@ -21,6 +21,11 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   bool _isNotValidate = false;
 
+  void registerTest() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
+
   void registerUser() async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       var regBody = {
@@ -142,7 +147,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 /// Sign Up Button
                 ElevatedButton(
                   onPressed: () => {
-                    registerUser(),
+                    //registerUser(),
+                    registerTest(),
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColor.primaryButtonColor,
