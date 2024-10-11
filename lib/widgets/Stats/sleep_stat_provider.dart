@@ -19,14 +19,22 @@ class SleepStatisticsProvider with ChangeNotifier {
   }
 
   List<Map<String, dynamic>> _weeklyData = [
-     {
+  {
     'day': 'Mon',
     'duration': Duration(hours: 7, minutes: 30),
     'rem': Duration(hours: 1, minutes: 30),
     'light': Duration(hours: 4, minutes: 0),
     'deep': Duration(hours: 2, minutes: 0),
+    'awake': Duration(minutes: 15),
     'sleepingTime': DateTime(2024, 10, 1, 23, 0), // Sleep at 11 PM
     'wakeUpTime': DateTime(2024, 10, 2, 6, 30),   // Wake up at 6:30 AM
+    'sleepStages': [
+      {'stage': 'light', 'start': '23:00', 'end': '00:00'},
+      {'stage': 'deep', 'start': '00:00', 'end': '02:00'},
+      {'stage': 'wake', 'start': '02:00', 'end': '02:05'},
+      {'stage': 'rem', 'start': '02:05', 'end': '03:35'},
+      {'stage': 'light', 'start': '03:35', 'end': '06:30'},
+    ],
   },
   {
     'day': 'Tue',
@@ -34,8 +42,16 @@ class SleepStatisticsProvider with ChangeNotifier {
     'rem': Duration(hours: 1, minutes: 15),
     'light': Duration(hours: 3, minutes: 30),
     'deep': Duration(hours: 2, minutes: 0),
+    'awake': Duration(minutes: 10),
     'sleepingTime': DateTime(2024, 10, 2, 23, 15), // Sleep at 11:15 PM
     'wakeUpTime': DateTime(2024, 10, 3, 6, 45),   // Wake up at 6:45 AM
+    'sleepStages': [
+      {'stage': 'light', 'start': '23:15', 'end': '23:45'},
+      {'stage': 'deep', 'start': '23:45', 'end': '01:45'},
+      {'stage': 'wake', 'start': '01:45', 'end': '01:50'},
+      {'stage': 'rem', 'start': '01:50', 'end': '03:05'},
+      {'stage': 'light', 'start': '03:05', 'end': '06:45'},
+    ],
   },
   {
     'day': 'Wed',
@@ -43,8 +59,16 @@ class SleepStatisticsProvider with ChangeNotifier {
     'rem': Duration(hours: 1, minutes: 45),
     'light': Duration(hours: 4, minutes: 15),
     'deep': Duration(hours: 2, minutes: 0),
+    'awake': Duration(minutes: 20),
     'sleepingTime': DateTime(2024, 10, 3, 22, 30), // Sleep at 10:30 PM
     'wakeUpTime': DateTime(2024, 10, 4, 6, 30),   // Wake up at 6:30 AM
+    'sleepStages': [
+      {'stage': 'light', 'start': '22:30', 'end': '23:15'},
+      {'stage': 'deep', 'start': '23:15', 'end': '01:15'},
+      {'stage': 'wake', 'start': '01:15', 'end': '01:25'},
+      {'stage': 'rem', 'start': '01:25', 'end': '03:10'},
+      {'stage': 'light', 'start': '03:10', 'end': '06:30'},
+    ],
   },
   {
     'day': 'Thu',
@@ -52,37 +76,70 @@ class SleepStatisticsProvider with ChangeNotifier {
     'rem': Duration(hours: 1, minutes: 10),
     'light': Duration(hours: 3, minutes: 50),
     'deep': Duration(hours: 2, minutes: 20),
-    'sleepingTime': DateTime(2024,10 ,4 ,23 ,5), // Sleep at around midnight
-    'wakeUpTime': DateTime(2024 ,10 ,5 ,6 ,25), // Wake up at around midnight
-   },
-   {
-     'day': 'Fri',
-     'duration': Duration(hours:8 ,minutes :34),
-     'rem' : Duration(hours :4 ,minutes :4),
-     'light' : Duration(hours :2 ,minutes :30),
-     'deep' : Duration(hours :2 ,minutes :0),
-     'sleepingTime' : DateTime(2024 ,10 ,5 ,23 ,0), // Sleep at midnight
-     'wakeUpTime' : DateTime(2024 ,10 ,6 ,7 ,0), // Wake up at around midnight
-   },
-   {
-     'day':'Sat',
-     'duration' :Duration(hours :9 ,minutes :45),
-     'rem' :Duration(hours :3 ,minutes :15),
-     'light' :Duration(hours :3 ,minutes :0),
-     'deep' :Duration(hours :3 ,minutes :30),
-     'sleepingTime' :DateTime(2024 ,10 ,6 ,1 ,0), // Sleep at around midnight
-     'wakeUpTime' :DateTime(2024 ,10 ,6 ,9 ,45), // Wake up at around midnight
-   },
-   {
-     'day':'Sun',
-     'duration' :Duration(hours :8 ,minutes :15),
-     'rem' :Duration(hours :2 ,minutes :15),
-     'light' :Duration(hours :3 ,minutes :0),
-     'deep' :Duration(hours :2 ,minutes :0),
-     'sleepingTime' :DateTime(2024 ,10 ,7 ,23 ,30), // Sleep at around midnight
-     'wakeUpTime' :DateTime(2024 ,10 ,8 ,7 ,45), // Wake up at around midnight
-   },
-  ];
+    'awake': Duration(minutes: 5),
+    'sleepingTime': DateTime(2024, 10, 4, 23, 5), // Sleep at 11:05 PM
+    'wakeUpTime': DateTime(2024, 10, 5, 6, 25),   // Wake up at 6:25 AM
+    'sleepStages': [
+      {'stage': 'light', 'start': '23:05', 'end': '00:00'},
+      {'stage': 'deep', 'start': '00:00', 'end': '02:20'},
+      {'stage': 'wake', 'start': '02:20', 'end': '02:25'},
+      {'stage': 'rem', 'start': '02:25', 'end': '03:35'},
+      {'stage': 'light', 'start': '03:35', 'end': '06:25'},
+    ],
+  },
+  {
+    'day': 'Fri',
+    'duration': Duration(hours: 8, minutes: 34),
+    'rem': Duration(hours: 2, minutes: 15),
+    'light': Duration(hours: 4, minutes: 0),
+    'deep': Duration(hours: 2, minutes: 0),
+    'awake': Duration(minutes: 10),
+    'sleepingTime': DateTime(2024, 10, 5, 23, 0), // Sleep at 11 PM
+    'wakeUpTime': DateTime(2024, 10, 6, 7, 0),   // Wake up at 7 AM
+    'sleepStages': [
+      {'stage': 'light', 'start': '23:00', 'end': '00:00'},
+      {'stage': 'deep', 'start': '00:00', 'end': '02:00'},
+      {'stage': 'wake', 'start': '02:00', 'end': '02:10'},
+      {'stage': 'rem', 'start': '02:10', 'end': '04:25'},
+      {'stage': 'light', 'start': '04:25', 'end': '07:00'},
+    ],
+  },
+  {
+    'day': 'Sat',
+    'duration': Duration(hours: 9, minutes: 45),
+    'rem': Duration(hours: 3, minutes: 15),
+    'light': Duration(hours: 3, minutes: 0),
+    'deep': Duration(hours: 3, minutes: 30),
+    'awake': Duration(minutes: 15),
+    'sleepingTime': DateTime(2024, 10, 6, 1, 0), // Sleep at 1 AM
+    'wakeUpTime': DateTime(2024, 10, 6, 9, 45),  // Wake up at 9:45 AM
+    'sleepStages': [
+      {'stage': 'light', 'start': '01:00', 'end': '01:45'},
+      {'stage': 'deep', 'start': '01:45', 'end': '04:45'},
+      {'stage': 'wake', 'start': '04:45', 'end': '05:00'},
+      {'stage': 'rem', 'start': '05:00', 'end': '08:15'},
+      {'stage': 'light', 'start': '08:15', 'end': '09:45'},
+    ],
+  },
+  {
+    'day': 'Sun',
+    'duration': Duration(hours: 8, minutes: 15),
+    'rem': Duration(hours: 2, minutes: 15),
+    'light': Duration(hours: 3, minutes: 0),
+    'deep': Duration(hours: 2, minutes: 0),
+    'awake': Duration(minutes: 10),
+    'sleepingTime': DateTime(2024, 10, 7, 23, 30), // Sleep at 11:30 PM
+    'wakeUpTime': DateTime(2024, 10, 8, 7, 45),   // Wake up at 7:45 AM
+    'sleepStages': [
+      {'stage': 'light', 'start': '23:30', 'end': '00:15'},
+      {'stage': 'deep', 'start': '00:15', 'end': '02:15'},
+      {'stage': 'wake', 'start': '02:15', 'end': '02:25'},
+      {'stage': 'rem', 'start': '02:25', 'end': '04:40'},
+      {'stage': 'light', 'start': '04:40', 'end': '07:45'},
+    ],
+  },
+];
+
 
     List<Map<String, dynamic>> get weeklyChartData {
     final maxDuration = _weeklyData.map((day) => day['duration'] as Duration).reduce((a, b) => a > b ? a : b);
@@ -118,12 +175,17 @@ bool get isDayView => _isDayView;
   }
 
   String get selectedDayTimeAsleep {
-    final rem = selectedDayData['rem'] as Duration;
-    final light = selectedDayData['light'] as Duration;
-    final deep = selectedDayData['deep'] as Duration;
-    final totalAsleep = rem + light + deep;
-    return '${totalAsleep.inHours} hr ${totalAsleep.inMinutes.remainder(60)} min';
-  }
+  final rem = selectedDayData['rem'] as Duration;
+  final light = selectedDayData['light'] as Duration;
+  final deep = selectedDayData['deep'] as Duration;
+  final awake = selectedDayData['awake'] as Duration; // Awake time
+
+  final totalAsleep = rem + light + deep;
+  final actualSleep = totalAsleep - awake; // Subtract awake time from total sleep
+
+  return '${actualSleep.inHours} hr ${actualSleep.inMinutes.remainder(60)} min';
+}
+
 
   String? get selectedWeekDayDuration {
     if (_selectedWeekDayIndex != null) {
