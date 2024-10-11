@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           SleepStatisticsProvider(), // Provide your SleepStatisticsProvider
       child: MaterialApp(
         home: (token != null && JwtDecoder.isExpired(token) == false)
-            ? MainScreen()
+            ? MainScreen(token: token)
             : const SignUpPage(),
       ),
     );

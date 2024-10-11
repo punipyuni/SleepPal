@@ -34,6 +34,11 @@ class _LoginPageState extends State<LoginPage> {
     prefs = await SharedPreferences.getInstance();
   }
 
+  void loginTesting() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MainScreen()));
+  }
+
   void loginUser() async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       var reqBody = {
@@ -121,7 +126,8 @@ class _LoginPageState extends State<LoginPage> {
                   /// Login Button
                   ElevatedButton(
                     onPressed: () => {
-                      loginUser(),
+                      //loginUser(),
+                      loginTesting(),
                     },
                     child: Text('Log in'),
                     style: ElevatedButton.styleFrom(
