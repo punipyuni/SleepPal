@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sleeppal_update/pages/MainScreen.dart';
+import 'package:velocity_x/velocity_x.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:sleeppal_update/auth/signup.auth.dart';
 import 'package:sleeppal_update/utils/app_color.utils.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:sleeppal_update/const.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -15,14 +22,40 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   bool _isNotValidate = false;
 
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    initSharedPreferences();
+  }
+
+  void initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
   void loginUser() async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-      // TODO: Implement login logic
-      print('Login attempt with email: ${emailController.text}');
-    } else {
-      setState(() {
-        _isNotValidate = true;
-      });
+      var reqBody = {
+        "email": emailController.text,
+        "password": passwordController.text
+      };
+      var response = await http.post(Uri.parse(loginUrl),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(reqBody));
+
+      var jsonResponse = await jsonDecode(response.body);
+
+      print(jsonResponse['status']);
+
+      if (jsonResponse['status']) {
+        var myToken = jsonResponse['token'];
+        prefs.setString('token', myToken);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MainScreen()));
+      } else {
+        print('Something went wrong');
+      }
     }
   }
 
@@ -47,6 +80,8 @@ class _LoginPageState extends State<LoginPage> {
                     height: 200,
                   ).p4(),
                   const SizedBox(height: 20),
+
+                  /// Email TextField
                   TextField(
                     controller: emailController,
                     style: TextStyle(color: Colors.white),
@@ -63,6 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
+
+                  /// Password TextField
                   TextField(
                     controller: passwordController,
                     obscureText: true,
@@ -80,8 +117,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
+
+                  /// Login Button
                   ElevatedButton(
-                    onPressed: loginUser,
+                    onPressed: () => {
+                      loginUser(),
+                    },
                     child: Text('Log in'),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -109,10 +150,10 @@ class _LoginPageState extends State<LoginPage> {
                     ]).centered(),
                   ),
 
-                  const SizedBox(height: 10),
+                  //const SizedBox(height: 10),
 
                   /// Forgot Password Link
-                  GestureDetector(
+                  /*GestureDetector(
                     onTap: () {
                       print("Forgot Password");
                       Navigator.push(
@@ -124,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: HStack([
                       "Forgot Your Password?".text.blue600.make(),
                     ]).centered(),
-                  ),
+                  ),*/
                 ],
               ),
             ),

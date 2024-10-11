@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:http/http.dart' as http;
 
-import '../utils/app_color.utils.dart';
-import 'login.auth.dart'; // Ensure this import is valid
+import 'package:sleeppal_update/const.dart';
+import 'package:sleeppal_update/utils/app_color.utils.dart';
+import 'package:sleeppal_update/auth/login.auth.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -16,6 +20,34 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool _isNotValidate = false;
+
+  void registerUser() async {
+    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+      var regBody = {
+        "email": emailController.text,
+        "password": passwordController.text
+      };
+
+      var response = await http.post(Uri.parse(signUpUrl),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(regBody));
+
+      var jsonResponse = await jsonDecode(response.body);
+
+      print(jsonResponse['status']);
+
+      if (jsonResponse['status']) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginPage()));
+      } else {
+        print('Something went wrong');
+      }
+    } else {
+      setState(() {
+        _isNotValidate = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +72,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(height: 20),
 
                 /// Username Textfield
-                TextField(
+                /// TODO: add username to Profile Model Database
+                /*TextField(
                   controller: usernameController,
                   style:
                       const TextStyle(color: Colors.white), // Input text color
@@ -56,8 +89,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderRadius: BorderRadius.all(Radius.circular(16.0)),
                     ),
                   ),
-                ).p4().px24(),
-                const SizedBox(height: 20),
+                ).p4().px24(),*/
+                //const SizedBox(height: 20),
 
                 /// Email Textfield
                 TextField(
@@ -108,9 +141,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
                 /// Sign Up Button
                 ElevatedButton(
-                  onPressed: () {
-                    // Placeholder for registration logic
-                    // You can add validation or other actions here
+                  onPressed: () => {
+                    registerUser(),
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColor.primaryButtonColor,

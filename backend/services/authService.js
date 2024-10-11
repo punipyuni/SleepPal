@@ -25,6 +25,10 @@ class AuthService {
             throw err;
         }
     }
+
+    static async generateToken(tokenData, secretKey, jwtExpiry) {
+        return jwt.sign(tokenData, secretKey, { expiresIn: jwtExpiry });
+    }
 }
 
 module.exports = AuthService();
