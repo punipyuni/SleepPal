@@ -2,8 +2,7 @@
 an innovative mobile application designed to enhance sleep quality by providing users with comprehensive tools and insights to establish and maintain healthy sleep routines.
 
 ## Devices
-* Android (Main Focus)
-* iOS (Later or Never)
+* Android
 
 ## Features
 * **Sleep Tracking:** Collect data on sleep duration, quality, and disruptions using smart watch or manual input. 
@@ -18,14 +17,24 @@ an innovative mobile application designed to enhance sleep quality by providing 
 **Important:** _Note to finsh the stack_
 ### Front-End
 * Flutter
+
 ### Back-End
 * Node.js
 * Express
+
 ### Database
 * MongoDB
+
+### Tools
+* MongoDBCompass
+* Postman
+
 ### 3rd-Party APIs
-* ChatGPT3.5 Turbo (or ChatGPT4-o)
+* OpenRouter
 * Health Connect
+
+### AI Model
+* Nous: Hermes 3 405B Instruct
 
 ## Documents
 **Important:** _Note to change every docs access to view only_
@@ -33,4 +42,3 @@ an innovative mobile application designed to enhance sleep quality by providing 
 * [Project Profile](https://docs.google.com/document/d/1mn2dxRZeJP_fP0N63ngiqpcF7kQEld90qKG_y2Q7sls/edit)
 * [GANTT Chart](https://docs.google.com/spreadsheets/d/1-kBJCH-tOBoSkJeNLSDsrWZTOUPjkPaj48-6ZlI_59A/edit#gid=0)
 * [Figma](https://www.figma.com/file/iImPNQs9rDkAREZekp1ElX/SleepPal?type=design&node-id=1-4&mode=design)
-* GitHub Repo
