@@ -6,6 +6,9 @@ SleepPal is an app designed to improve sleep quality by analyzing user behavior 
 ## Devices
 * Android (API > 26)
 
+## Required Application
+* Health Connect (Allow SleepPal permission to write & read data to be able to use the application.)
+
 ## Technology Stack
 ### AI Model
 * nvidia/Llama-3.1-Nemotron-70B-Instruct-HF

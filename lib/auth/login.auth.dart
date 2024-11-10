@@ -26,15 +26,15 @@ class _LoginPageState extends State<LoginPage> {
 
   late SharedPreferences prefs;
 
- @override
-void initState() {
-  super.initState();
-  initSharedPreferences();
-}
+  @override
+  void initState() {
+    super.initState();
+    initSharedPreferences();
+  }
 
-void initSharedPreferences() async {
-  prefs = await SharedPreferences.getInstance();
-}
+  void initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   /*void loginTesting() {
     Navigator.push(
@@ -42,95 +42,96 @@ void initSharedPreferences() async {
   }*/
 
   Future<void> loginUser() async {
+    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+      var reqBody = {
+        "email": emailController.text,
+        "password": passwordController.text
+      };
 
-  if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-    var reqBody = {
-      "email": emailController.text,
-      "password": passwordController.text
-    };
+      try {
+        var response = await http
+            .post(
+              Uri.parse("$url/auth/login"),
+              headers: {"Content-Type": "application/json"},
+              body: jsonEncode(reqBody),
+            )
+            .timeout(const Duration(seconds: 10));
 
-    try {
-      var response = await http
-          .post(
-            Uri.parse("$url/auth/login"),
-            headers: {"Content-Type": "application/json"},
-            body: jsonEncode(reqBody),
-          )
-          .timeout(const Duration(seconds: 10));
+        var jsonResponse = jsonDecode(response.body);
 
-      var jsonResponse = jsonDecode(response.body);
+        if (response.statusCode == 200 && jsonResponse['status']) {
+          var myToken = jsonResponse['token'];
 
-      if (response.statusCode == 200 && jsonResponse['status']) {
-        var myToken = jsonResponse['token'];
-        
-        // Get the list of previously logged in emails
-        Set<String> previousEmails = prefs.getStringList('previous_emails')?.toSet() ?? {};
-        
-        if (!previousEmails.contains(emailController.text)) {
-          // This is a new login for this email
-          previousEmails.add(emailController.text);
-          await prefs.setStringList('previous_emails', previousEmails.toList());
-          await prefs.setString('token', myToken);
-          await prefs.setString('current_email', emailController.text);
-          
-          // Navigate to Getting Started
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => GettingStartedPage(token: myToken),
-            ),
-          );
+          // Get the list of previously logged in emails
+          Set<String> previousEmails =
+              prefs.getStringList('previous_emails')?.toSet() ?? {};
+
+          if (!previousEmails.contains(emailController.text)) {
+            // This is a new login for this email
+            previousEmails.add(emailController.text);
+            await prefs.setStringList(
+                'previous_emails', previousEmails.toList());
+            await prefs.setString('token', myToken);
+            await prefs.setString('current_email', emailController.text);
+
+            // Navigate to Getting Started
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GettingStartedPage(token: myToken),
+              ),
+            );
+          } else {
+            // This email has logged in before
+            await prefs.setString('token', myToken);
+            await prefs.setString('current_email', emailController.text);
+
+            // Navigate to Main Screen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MainScreen(token: myToken),
+              ),
+            );
+          }
         } else {
-          // This email has logged in before
-          await prefs.setString('token', myToken);
-          await prefs.setString('current_email', emailController.text);
-          
-          // Navigate to Main Screen
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MainScreen(token: myToken),
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content:
+                  Text("Login failed. Please check your email and password."),
+              duration: Duration(seconds: 3),
             ),
           );
         }
-      } else {
+      } on TimeoutException catch (_) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text("Login failed. Please check your email and password."),
+            content: Text("Connection timed out. Please try again."),
             duration: Duration(seconds: 3),
           ),
         );
+      } catch (e) {
+        print("Error during login: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text("Email or password maybe incorrect. Please try again."),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
-    } on TimeoutException catch (_) {
+    } else {
+      setState(() {
+        _isNotValidate = true;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Connection timed out. Please try again."),
-          duration: Duration(seconds: 3),
-        ),
-      );
-    } catch (e) {
-      print("Error during login: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("An error occurred. Please try again."),
+          content: Text("Please fill in all fields."),
           duration: Duration(seconds: 3),
         ),
       );
     }
-  } else {
-    setState(() {
-      _isNotValidate = true;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Please fill in all fields."),
-        duration: Duration(seconds: 3),
-      ),
-    );
   }
-}
-
-
 
   @override
   Widget build(BuildContext context) {
