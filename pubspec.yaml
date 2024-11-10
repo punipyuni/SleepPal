@@ -58,7 +58,7 @@ dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/App-icon.png"
+  image_path: "assets/icon/icon.png"
   
 dev_dependencies:
   flutter_test:
@@ -86,6 +86,7 @@ flutter:
   assets:
      - assets/images/
      - assets/audio/
+     - assets/icon/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
