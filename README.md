@@ -4,7 +4,7 @@
 SleepPal is an app designed to improve sleep quality by analyzing user behavior and promoting healthier sleep habits. It collects data from wearable devices to evaluate sleep duration, quality, and timing, generating a personalized sleep score. The app also assesses lifestyle factors like caffeine intake, exercise, and stress through AI-driven analysis, providing tailored recommendations for improvement. Key features include a SleepBot for guidance, relaxing sounds for stress relief, and bedtime notifications, all aimed at fostering better sleep routines and enhancing overall well-being.
 
 ## Devices
-* Android API >= 26
+* Android (API > 26)
 
 ## Technology Stack
 ### AI Model
