@@ -193,7 +193,8 @@ class _ChatgptState extends State<Chatgpt> {
 "  - Children and Adolescents (6-17 years): At least 60 minutes of moderate to vigorous activity daily, with muscle- and bone-strengthening activities on 3 days a week.\n" +
 "  - Adults (18-64 years): 150 minutes of moderate activity per week, with muscle-strengthening activities on at least 2 days.\n" 
 "  - Older Adults (65+ years): Similar to adults, with additional exercises for balance.\n" 
-"  - Pregnant and Postpartum Women: 150 minutes of moderate-intensity aerobic activity per week.\n" 
+"  - Pregnant and Postpartum Women: 150 minutes of moderate-intensity aerobic activity per week.\n"
+"  - And In case you been ask about how many times you walk in 10000 steps you just answer it is around 1 hour 40mins or 100 mins" 
 "- Mention any sleep apps or tools that can track sleep patterns or help with relaxation.\n\n" 
 "4. Sleep Problems:\n" 
 "- Offer strategies to handle common issues like insomnia, difficulty falling asleep, or frequent waking.\n" 

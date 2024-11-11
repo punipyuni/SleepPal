@@ -462,7 +462,7 @@ class SleepStatisticsProvider with ChangeNotifier {
     if (totalSleepHours < 6) {
       score = score.clamp(0, 50);
     } else {
-      score = score.clamp(0, 75);
+      score = score.clamp(0, 100);
     }
 
     return score;
