@@ -29,7 +29,7 @@ void main() async {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget {   
   final String? token;
 
   const MyApp({Key? key, this.token}) : super(key: key);
