@@ -37,5 +37,5 @@ SleepPal is an app designed to improve sleep quality by analyzing user behavior 
 * **SleepBot:** Suggest users to develop healthy sleep habits. Provide educational resources on the importance of sleep, strategies for improving sleep quality and how to handle some of the sleep problems
 * **Relaxing or ASMR Sounds:** Suggest users to develop healthy sleep habits. Provide educational resources on the importance of sleep, strategies for improving sleep quality and how to handle some of the sleep problems
 * **Bedtime Reminder Notification:** Customize your notification time before sleep.
-* **Late Sleeptime Notification:** Auto set the sleep time earlier for 1 hour for get the better sleep caution icon will show when you sleep time is more than 1 AM.
+* **Late Sleeptime Notification:** Auto set the sleep time earlier for 1 hour to get the better sleep caution icon will show when your sleep time is more than 1 AM.
 * **User Authentication:** Login/Sign up Authentication for accounts.
