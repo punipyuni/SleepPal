@@ -3,7 +3,13 @@
 # SleepPal
 SleepPal is an app designed to improve sleep quality by analyzing user behavior and promoting healthier sleep habits. It collects data from wearable devices to evaluate sleep duration, quality, and timing, generating a personalized sleep score. The app also assesses lifestyle factors like caffeine intake, exercise, and stress through AI-driven analysis, providing tailored recommendations for improvement. Key features include a SleepBot for guidance, relaxing sounds for stress relief, and bedtime notifications, all aimed at fostering better sleep routines and enhancing overall well-being.
 
-## Devices
+## Table of Contents
+* [SleepPal](https://github.com/punipyuni/SleepPal/edit/main/README.md#sleeppal)
+* [Requirements](https://github.com/punipyuni/SleepPal/edit/main/README.md#requirements)
+* [Technology Stack](https://github.com/punipyuni/SleepPal/edit/main/README.md#technology-stack)
+* [Getting Start](https://github.com/punipyuni/SleepPal/edit/main/README.md#getting-start)
+
+## Requirements
 * Android Mobile Devices (API > 26)
 * Health Connect Supported Smartwatches (eg. Fitbit, Samsung Health)
 
@@ -40,3 +46,76 @@ SleepPal is an app designed to improve sleep quality by analyzing user behavior 
 * **Bedtime Reminder Notification:** Customize your notification time before sleep.
 * **Late Sleeptime Notification:** Auto set the sleep time earlier for 1 hour to get the better sleep caution icon will show when your sleep time is more than 1 AM.
 * **User Authentication:** Login/Sign up Authentication for accounts.
+
+## Getting Start
+### Setup Project
+1. Install `Flutter` `Node` `VSCode` `Git`
+> **Note:** You can use any Code Editor you prefer.
+2. Cloning github or downloading the code from the [Releases](https://github.com/punipyuni/SleepPal/releases) to your local device.
+3. Download [MongoDB Compass](https://www.mongodb.com/products/tools/compass) to connect to the database.
+> **Note:** Create your own database cluster in MongoDB. Copy your database connection string to `backend/config/database.js` file to use the database.
+4. Download [Android Studio](https://developer.android.com/studio) to use virtual device emulator.
+> **Note:** You can use any virtual devices emulator you prefer.
+
+### Backend Setup
+1. Install dependencies `bcrypt`, `body-parser`, `express`, `jsonwebtoken`, `mongodb`, `mongoose`, and `nodemon`.
+```bash
+npm install bcrypt body-parser express jsonwebtoken mongodb mongoose
+```
+* Install `nodemon` and setting up `npm run dev`.
+```bash
+npm install -D nodemon
+```
+* In `package.json` file.
+```bash
+...
+"scripts": {
+    "dev": "nodemon index.js"
+  },
+...
+```
+2. In `database.js` file. Change the database string to your database connection string.
+```bash
+const connection = mongoose.createConnection(`database connection string`).on('open', () => {
+    console.log('MongoDB connected');
+}).on('error', () => {
+    console.log('MongoDB Connection error');
+});
+```
+3. Setting up Port in `index.js`
+```bash
+const port = 3000;
+```
+> **Note:** You can use any port. The project default port is `3000`.
+
+> If you do change the port, please change the url in the `const.dart` file
+
+### Frontend Setup
+1. Install Flutter dependencies.
+```bash
+flutter pub get
+```
+2. Change the port in the `const.dart` file to your port.
+```bash
+/// IP Address for API
+final url = "http://localhost:3000";
+```
+
+### Running SleepPal
+1. In `backend` folder, run `npm run dev`
+```bash
+cd backend
+```
+```bash
+npm run dev
+```
+2. Select your virtual device or physical device.
+3. Before running `main.dart`. Check the port of the device to the same port in the project.
+```
+adb reverse tcp:3000 tcp:3000
+```
+> **Note:** Change port to the same one you use inn the backend.
+4. Run `main.dart` to run SleepPal.
+```bash
+flutter run
+```
