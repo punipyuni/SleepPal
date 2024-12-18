@@ -60,6 +60,9 @@ SleepPal is an app designed to improve sleep quality by analyzing user behavior 
 ### Backend Setup
 1. Install dependencies `bcrypt`, `body-parser`, `express`, `jsonwebtoken`, `mongodb`, `mongoose`, and `nodemon`.
 ```bash
+cd backend
+```
+```bash
 npm install bcrypt body-parser express jsonwebtoken mongodb mongoose
 ```
 * Install `nodemon` and setting up `npm run dev`.
